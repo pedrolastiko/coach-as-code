@@ -2,7 +2,7 @@
 
 Application web installable (PWA) qui affiche le plan d'entraînement hebdomadaire pour le **Marathon du P'tit Train du Nord** (04/10/2026, objectif 3h55–3h59). C'est une page unique, sans backend ni build, pensée pour être consultée depuis un téléphone, y compris hors connexion.
 
-**Démo en ligne :** `https://pedrolastiko.github.io/coach-as-code/` (une fois GitHub Pages activé, voir plus bas).
+**Démo en ligne :** [DEMO](https://pedrolastiko.github.io/coach-as-code/).
 
 ## Fonctionnalités
 

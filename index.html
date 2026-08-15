@@ -61,6 +61,15 @@
   .meteo{font-size:12.5px;white-space:nowrap;color:var(--ink);}
   .meteo.past{color:var(--ink-soft);}
   .wh-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .wsdot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+  .wsdot.done{background:var(--status-done);}
+  .wsdot.warn{background:var(--amber);}
+  .wsdot.danger{background:var(--coral);}
+  .wsdot.neutral{background:var(--status-neutral);}
+  .week-comment{font-size:12.5px;line-height:1.55;color:#3a3d5c;border-left:3px solid var(--teal);padding:2px 0 2px 11px;margin:0 22px 14px;}
+  .week-comment.warn{border-left-color:var(--amber);}
+  .week-comment.danger{border-left-color:var(--coral);}
+  .week-comment.neutral{border-left-color:var(--status-neutral);}
   .wchev{font-size:13px;color:var(--ink-soft);transition:transform .2s ease;}
   .week.open > .week-head .wchev{transform:rotate(90deg);}
   .week-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
@@ -124,6 +133,7 @@
     .status{font-size:10.5px; padding:2px 7px 2px 6px;}
     .mini-bar{min-width:60px;}
     .detail-inner{padding:14px 12px 18px;}
+    .week-comment{margin:0 12px 12px;}
     .full-bar{height:56px;}
     .full-bar .seg .seg-label{font-size:9px;}
     .full-bar .seg .seg-detail{font-size:8px;}
@@ -359,6 +369,7 @@ weeks.forEach((w, wi) => {
   weekEl.className = 'week' + (w.open ? ' open' : '');
 
   const volLine = w.volReal ? `${w.vol} · <b>${w.volReal}</b>` : w.vol;
+  const statusCls = w.statusEmoji==='🟢'?'done':w.statusEmoji==='🟡'?'warn':w.statusEmoji==='🔴'?'danger':'neutral';
 
   weekEl.innerHTML = `
     <div class="week-head">
@@ -369,11 +380,12 @@ weeks.forEach((w, wi) => {
         <span class="wh-vol">${volLine}</span>
       </div>
       <div class="wh-right">
-        <span class="status ${w.statusEmoji==='🟢'?'done':w.statusEmoji==='🟡'?'warn':'neutral'}"><span class="dot"></span>${w.statusEmoji} ${w.statusText}</span>
+        <span class="wsdot ${statusCls}" title="${w.statusText}"></span>
         <span class="wchev">▶</span>
       </div>
     </div>
     <div class="week-body">
+      <div class="week-comment ${statusCls}">${w.statusEmoji} ${w.statusText}</div>
       <div class="table-scroll">
         <table>
           <thead><tr><th>Séance</th><th>Statut</th><th>Distance</th><th>Météo</th><th>Répartition</th><th></th></tr></thead>

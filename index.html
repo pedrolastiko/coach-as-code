@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Marathon — Pierre LC</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2d3154">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Plan Marathon">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<style>
+  :root{
+    --bg:#eef0fa;
+    --card:#ffffff;
+    --ink:#2d3154;
+    --ink-soft:#8b8fa8;
+    --line:#eceef6;
+    --gray:#888780;
+    --gray-light:#b4b2a9;
+    --coral:#e8623f;
+    --teal:#1d9e75;
+    --purple:#7f77dd;
+    --amber:#f0ad4e;
+    --status-done-bg:#e8fbf0; --status-done:#2ecc71; --status-done-txt:#1e9e5c;
+    --status-todo-bg:#eaf4fd; --status-todo:#4a9de8; --status-todo-txt:#2f7fc4;
+    --status-warn-bg:#fdeee9; --status-warn:#e8623f; --status-warn-txt:#c74a2b;
+    --status-neutral-bg:#f2f2f6; --status-neutral:#a7abbf; --status-neutral-txt:#75798f;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Helvetica Neue",Arial,sans-serif;padding:36px 16px 90px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  .page-title{font-size:26px;font-weight:700;margin:0 0 6px;}
+  .page-sub{font-size:14px;color:var(--ink-soft);margin-bottom:18px;}
+  .header-row{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .toggle-all{display:flex; align-items:center; gap:9px; flex-shrink:0; margin-top:2px;}
+  .toggle-all .toggle-label{font-size:12.5px; color:var(--ink-soft); font-weight:600; white-space:nowrap;}
+  .switch{position:relative; width:42px; height:24px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .switch-track{position:absolute; cursor:pointer; inset:0; background:#d6d8e4; border-radius:24px; transition:background .2s ease;}
+  .switch-track::before{content:""; position:absolute; height:18px; width:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform .2s ease; box-shadow:0 1px 2px rgba(0,0,0,.15);}
+  .switch input:checked + .switch-track{background:#1d9e75;}
+  .switch input:checked + .switch-track::before{transform:translateX(18px);}
+  .switch input:focus-visible + .switch-track{outline:2px solid var(--teal); outline-offset:2px;}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--ink-soft);margin-bottom:26px;}
+
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  .week{background:var(--card);border-radius:14px;box-shadow:0 1px 3px rgba(45,49,84,.06),0 8px 20px rgba(45,49,84,.04);margin-bottom:12px;overflow:hidden;}
+  .week-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;user-select:none;gap:12px;}
+  .week-head:hover{background:#fafbff;}
+  .wh-left{display:flex;align-items:center;gap:14px;min-width:0;}
+  .wh-num{font-family:"Courier New",monospace;font-size:11px;color:var(--ink-soft);width:64px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
+  .wh-title{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .wh-vol{font-size:12px;color:var(--ink-soft);margin-left:8px;white-space:nowrap;}
+  .wh-dates{font-family:"Courier New",monospace;font-size:11px;color:var(--ink-soft);margin-left:8px;white-space:nowrap;}
+  .meteo{font-size:12.5px;white-space:nowrap;color:var(--ink);}
+  .meteo.past{color:var(--ink-soft);}
+  .wh-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .wchev{font-size:13px;color:var(--ink-soft);transition:transform .2s ease;}
+  .week.open > .week-head .wchev{transform:rotate(90deg);}
+  .week-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .week.open > .week-body{max-height:4000px;}
+
+  table{width:100%;border-collapse:collapse;}
+  thead th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);padding:10px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fafbff;}
+  tbody tr.row{cursor:pointer;border-bottom:1px solid var(--line);transition:background .15s ease;}
+  tbody tr.row:hover{background:#fafbff;}
+  td{padding:13px 16px;vertical-align:middle;font-size:13.5px;}
+  .icon-cell{display:flex;align-items:center;gap:10px;}
+  .icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:1px solid var(--line);}
+  .icon.ef{background:#f2f0ff;} .icon.seuil{background:#fdeee9;} .icon.sl{background:#eaf4fd;} .icon.repos{background:#f2f2f6;} .icon.cross{background:#fef6e6;}
+  .name-block .day{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:1px;}
+  .name-block .name{font-weight:700;font-size:13.5px;}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 9px 3px 7px;border-radius:20px;white-space:nowrap;}
+  .status .dot{width:6px;height:6px;border-radius:50%;}
+  .status.done{color:var(--status-done-txt);background:var(--status-done-bg);} .status.done .dot{background:var(--status-done);}
+  .status.todo{color:var(--status-todo-txt);background:var(--status-todo-bg);} .status.todo .dot{background:var(--status-todo);}
+  .status.warn{color:var(--status-warn-txt);background:var(--status-warn-bg);} .status.warn .dot{background:var(--status-warn);}
+  .status.neutral{color:var(--status-neutral-txt);background:var(--status-neutral-bg);} .status.neutral .dot{background:var(--status-neutral);}
+  .distance{font-weight:600;}
+  .mini-bar{display:flex;width:100%;min-width:100px;height:7px;border-radius:20px;overflow:hidden;background:#f0f0f0;}
+  .mini-bar .mseg{height:100%;}
+  .chev{color:var(--ink-soft);font-size:11px;transition:transform .2s ease;display:inline-block;}
+  tr.row.open .chev{transform:rotate(90deg);}
+  .detail-row td{padding:0;border-bottom:1px solid var(--line);}
+  .detail-wrap{max-height:0;overflow:hidden;transition:max-height .28s ease;background:#fbfbfe;}
+  .detail-row.open .detail-wrap{max-height:420px;}
+  .detail-inner{padding:16px 24px 22px;}
+  .full-bar{display:flex;width:100%;height:44px;border-radius:8px;overflow:hidden;margin-bottom:12px;}
+  .full-bar .seg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:2px 3px;min-width:0;}
+  .full-bar .seg .seg-label{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  .full-bar .seg .seg-detail{font-family:"Courier New",monospace;font-size:8.5px;opacity:.92;white-space:nowrap;}
+  .metrics-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .chip{background:#f2f3fa;border-radius:20px;padding:4px 10px;font-size:11.5px;display:flex;gap:5px;align-items:baseline;}
+  .chip b{font-family:"Courier New",monospace;font-size:12px;} .chip span{color:var(--ink-soft);font-size:10px;}
+  .comment{font-size:12.5px;line-height:1.55;color:#3a3d5c;border-left:3px solid var(--teal);padding:2px 0 2px 11px;}
+  .comment.warn{border-left-color:var(--coral);}
+  .rest-row td{color:var(--ink-soft);font-size:13px;font-style:italic;}
+  footer{margin-top:20px;font-size:11.5px;color:var(--ink-soft);text-align:center;}
+
+  @media (max-width:520px){
+    body{padding:20px 10px 70px;}
+    .page-title{font-size:21px;}
+    .page-sub{font-size:12.5px;}
+    .legend{gap:8px 12px; font-size:10.5px; margin-bottom:18px;}
+    .header-row{gap:10px;}
+    .week-head{padding:14px 12px;}
+    .wh-title{font-size:13.5px;}
+    .wh-dates, .wh-vol{display:block; margin-left:0; margin-top:2px; font-size:10px;}
+    .wh-left{flex-wrap:wrap; row-gap:2px;}
+    thead th{padding:8px 8px; font-size:9px;}
+    td{padding:10px 8px; font-size:12.5px;}
+    thead th:nth-child(4), td:nth-child(4){display:none;}
+    .icon{width:26px; height:26px; font-size:12px;}
+    .name-block .name{font-size:12.5px;}
+    .distance{font-size:12px;}
+    .status{font-size:10.5px; padding:2px 7px 2px 6px;}
+    .mini-bar{min-width:60px;}
+    .detail-inner{padding:14px 12px 18px;}
+    .full-bar{height:56px;}
+    .full-bar .seg .seg-label{font-size:9px;}
+    .full-bar .seg .seg-detail{font-size:8px;}
+    .metrics-row{gap:6px;}
+    .chip{padding:4px 8px; font-size:10.5px;}
+    .comment{font-size:11.5px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header-row">
+    <div>
+      <div class="page-title">Plan Marathon — P'tit Train du Nord</div>
+      <div class="page-sub">Pierre LC · course le 04/10/2026 · objectif 3h55–3h59 · allure marathon 5:41/km</div>
+    </div>
+    <div class="toggle-all">
+      <span class="toggle-label" id="toggleLabel">Tout déplier</span>
+      <label class="switch">
+        <input type="checkbox" id="toggleAllInput">
+        <span class="switch-track"></span>
+      </label>
+    </div>
+  </div>
+  <div class="legend">
+    <span><i style="background:#4EB876"></i>Endurance fondamentale</span>
+    <span><i style="background:#F0B429"></i>Seuil</span>
+    <span><i style="background:#E2637A"></i>Fractionné</span>
+    <span><i style="background:#4FA8E8"></i>Sortie longue</span>
+    <span><i style="background:#1d9e75"></i>Allure marathon</span>
+    <span><i style="background:#888780"></i>Échauffement / retour au calme</span>
+    <span><i style="background:#f0ad4e"></i>Récupération entre répétitions</span>
+  </div>
+
+  <div id="weeks"></div>
+  <footer>Clique une semaine pour la déplier, puis une séance pour voir le détail. Durées estimées à partir des allures cibles.</footer>
+</div>
+
+<script>
+const G="#888780", GL="#b4b2a9", A="#f0ad4e", T="#1d9e75";
+const EFG="#4EB876", SEUILY="#F0B429", FRACC="#E2637A", SLB="#4FA8E8";
+function seg(label,min,pace,color){return {label,min:Math.round(min),pace,color};}
+function segR(label,minLo,minHi,pace,color){return {label,min:Math.round((minLo+minHi)/2),range:`${minLo}-${minHi} min`,pace,color};}
+function s(day,name,icon,iconClass,status,statusLabel,distance,segments,metrics,comment,warn,meteo){
+  return {day,name,icon,iconClass,status,statusLabel,distance,segments,metrics,comment,warn:!!warn,meteo};
+}
+function rest(day,label,note){ return {rest:true, day, label, note}; }
+
+const weeks = [
+
+{num:"S1", dates:"2026 Juin 15 au 21", title:"Base", vol:"38 km prévus", volReal:"~ 26,5 km observés (S1E2 + S1E3)", statusEmoji:"🟢", statusText:"séances qualité solides", open:false, sessions:[
+  s("Sam 20/06","EF (3×8min @5:15)","⚡","seuil","done","Réalisée","8,21 km",
+    [seg("Endurance + seuil",46,"5:15/km sur les blocs",FRACC)],
+    [{val:"173",lbl:"FC moy"},{val:"190",lbl:"FC max"},{val:"161",lbl:"Cadence"}],
+    "3×8 min au seuil bien exécutés. FC moyenne 173, cohérente avec un effort seuil soutenu.",false,"🌤️ ~20°C (historique, Montréal)"),
+  s("Dim 21/06","EF (sortie vallonnée)","🏔️","sl","done","Réalisée","17,4 km",
+    [seg("Endurance fondamentale",125,"6:23/km",SLB)],
+    [{val:"155",lbl:"FC moy"},{val:"364 m",lbl:"D+"},{val:"156",lbl:"Cadence"}],
+    "Beaucoup plus long et vallonné (364 m D+) qu'un simple footing EF — probablement une sortie trail improvisée plutôt que la sortie longue nominale de 14 km. FC bien maîtrisée malgré le dénivelé.",false,"🌤️ ~19°C (historique, Montréal)")
+]},
+
+{num:"S2", dates:"2026 Juin 22 au 28", title:"Base", vol:"43 km prévus", volReal:"~34,8 km observés (S2E1-E3)", statusEmoji:"🟢", statusText:"bonne exécution des fractions", open:false, sessions:[
+  s("Ven 26/06","EF + 7×400m — Juno Beach","⚡","seuil","done","Réalisée","12,4 km",
+    [seg("Échauffement",15,"6:00-6:40/km",G),seg("Fractions 400m",8,"~5:11/km",FRACC),seg("Récup + retour",26,"trot/EF",GL)],
+    [{val:"162",lbl:"FC moy"},{val:"183",lbl:"FC max"},{val:"156",lbl:"Cadence"}],
+    "7×400m tenus autour de 5:11/km (proche de la cible 4:50-5:00, légèrement au-dessus). Séance faite en France (bord de mer, Normandie) avant le retour à Montréal.",false,"⛅ ~18°C (historique, Normandie)"),
+  s("Sam 27/06","EF","🏃","ef","done","Réalisée","7,19 km",[seg("Endurance fondamentale",43,"6:01/km",EFG)],[],"Footing court, conforme à l'esprit EF de la semaine.",false,"⛅ ~19°C (historique)"),
+  s("Dim 28/06","Sortie longue","🏔️","sl","done","Réalisée","15,17 km",
+    [seg("Endurance fondamentale",96,"6:20/km",SLB)],
+    [{val:"154",lbl:"FC moy"},{val:"160",lbl:"Cadence"}],
+    "Légèrement en dessous de la cible (15,2 vs 16 km) mais dans la marge de tolérance du plan (±10%). FC basse et stable.",false,"☀️ ~20°C (historique, Normandie)")
+]},
+
+{num:"S3", dates:"2026 Juin 29 au Juillet 5", title:"Base", vol:"46 km prévus", volReal:"~44,4 km réalisés (94%)", statusEmoji:"🟢", statusText:"semaine conforme au plan", open:false, sessions:[
+  s("Mar 30/06","EF + 8×400m","⚡","seuil","done","Réalisée","10,0 km",
+    [seg("Échauffement",17,"6:00-6:40/km",G),seg("Fractions 400m",9,"~4:50/km",FRACC),seg("Récup + retour",34,"trot/EF",GL)],
+    [{val:"169",lbl:"FC moy"},{val:"198",lbl:"FC max"},{val:"157",lbl:"Cadence"}],
+    "8×400m, allures rapides (meilleur 400m à 1:47, très en dessous de la cible) — séance intense, FC max à 198 déjà cohérente avec le profil cardiaque élevé de Pierre.",false,"☀️ ~24°C (historique, rég. parisienne)"),
+  s("Ven 03/07","8 km incl. 20 min seuil","⚡","seuil","done","Réalisée","8,39 km",
+    [seg("Échauffement",19,"6:15/km",G),seg("Seuil",20,"5:27/km",SEUILY),seg("Retour",12,"7:03/km",GL)],
+    [{val:"175",lbl:"FC moy (bloc)"},{val:"186",lbl:"FC max"},{val:"161",lbl:"Cadence"}],
+    "Bloc de 20 min à 5:27/km, FC 175-186 — c'est la référence qui a servi de comparaison directe avec le bloc initial de la séance du 06/08 (mêmes valeurs quasi identiques : 5:27/km, FC 174-175).",false,"☀️ ~23°C (historique, rég. parisienne)"),
+  s("Sam 04/07","EF","🏃","ef","done","Réalisée","8,02 km",[seg("Endurance fondamentale",52,"6:26/km",EFG)],[{val:"153",lbl:"FC moy"}],"Footing conforme, FC basse.",false,"☀️ ~23°C (historique, rég. parisienne)"),
+  s("Dim 05/07","Sortie longue","🏔️","sl","done","Réalisée","18,6 km",
+    [seg("Endurance fondamentale",125,"6:41/km",SLB)],
+    [{val:"155",lbl:"FC moy"},{val:"224 m",lbl:"D+"},{val:"161",lbl:"Cadence"}],
+    "Distance cible atteinte (18,6 vs 18 km). Parcours vallonné (224 m D+, encore en France) — FC bien maîtrisée malgré le dénivelé.",false,"☀️ ~24°C (historique, rég. parisienne)")
+]},
+
+{num:"S4", dates:"2026 Juillet 7 au 14", title:"Mini-affûtage (adaptée)", vol:"~45 km prévus", volReal:"38,8 km réalisés (86%)", statusEmoji:"🟡", statusText:"léger retard, séances valides", open:false, sessions:[
+  s("Mar 07/07","EF","🏃","ef","done","Réalisée","10,6 km",[seg("Endurance fondamentale",70,"6:38/km",EFG)],[{val:"6:38/km",lbl:"Allure"}],"Séance propre, dans la fenêtre EF.",false,"☀️ ~30°C (historique, Toulouse/Tarn)"),
+  s("Ven 10/07","EF + 12 min seuil","⚡","seuil","done","Réalisée","7,1 km",[seg("Échauffement",32,"6:33/km",G),seg("Seuil",12,"5:20/km",SEUILY)],[{val:"5:20/km",lbl:"Allure seuil"}],"Séance de référence de l'époque, allure seuil tenue proprement.",false,"☀️ ~29°C (historique, Toulouse/Tarn)"),
+  rest("Sam 11/07","Repos","Prévu."),
+  s("Dim 12/07","Footing d'activation","🏃","ef","done","Réalisée","6,0 km",[seg("Endurance fondamentale",40,"6:37/km",EFG)],[{val:"6:37/km",lbl:"Allure"},{val:"3",lbl:"Accélérations"}],"Footing d'activation avec accélérations, exécution conforme.",false,"☀️ ~29°C (historique, Toulouse/Tarn)"),
+  s("Mar 14/07","Sortie longue — Château de Penne","🏔️","sl","warn","Réalisée · substituée","15,0 km",[seg("Endurance fondamentale",118,"7:52/km",SLB)],[{val:"1h58",lbl:"Durée"},{val:"297 m",lbl:"D+"},{val:"196",lbl:"FC max"}],"Remplace le Trail des Bartàs (25 km/1100 m D+, annulé pour canicule ~35°C). Stimulus d'endurance réel mais coûteux : FC max 196, cadence effondrée à 151 spm, effort à jeun par forte chaleur.",true,"🔥 ~35°C, canicule (confirmé)")
+]},
+
+{num:"S5", dates:"2026 Juillet 15 au 19", title:"Récupération / transition", vol:"variable", volReal:"~9,2 km réalisés", statusEmoji:"🟡", statusText:"trou de volume lié aux déplacements", open:false, sessions:[
+  s("Jeu 16/07","Via Ferrata","⛰️","cross","done","Cross-training","—",[],[],"Roc d'Anglars — activité hors course, pas de stimulus running direct.",false),
+  s("Sam 18/07","EF (S5E2)","🏃","ef","done","Réalisée","9,25 km",[seg("Endurance fondamentale",57,"6:12/km",EFG)],[{val:"6:12/km",lbl:"Allure"},{val:"153",lbl:"FC moy"}],"Séance propre, plat, dans la fenêtre EF.",false,"☀️ ~28°C (historique, Tarn)"),
+  rest("Dimanche 19/07","Repos","Prévu."),
+  rest("20-24/07","Vol Paris → Montréal + jetlag","Aucune course sur cette période — déplacement transatlantique, 6h de décalage vers l'ouest.")
+]},
+
+{num:"Reprise", dates:"2026 Juillet 25 au 26", title:"Réamorçage post-vol", vol:"faible volume, intentionnel", statusEmoji:"🟢", statusText:"réamorçage réussi", open:false, sessions:[
+  s("Sam 25/07","EF très facile","🏃","ef","done","Réalisée","6,0 km",[seg("Endurance fondamentale",37,"6:14/km",EFG)],[{val:"6:14/km",lbl:"Allure"},{val:"150",lbl:"FC moy"},{val:"159",lbl:"Cadence"}],"Un peu plus vite que la consigne (6:14 vs 6:30-6:50) mais rien d'inquiétant sur 6 km — bonne reprise après 7 jours off et le vol.",false,"🌤️ ~24°C (historique, Montréal)"),
+  rest("Dimanche 26/07","Repos / marche","70% de pluie annoncée — recalage sur l'heure locale.")
+]},
+
+{num:"S6", dates:"2026 Juillet 27 au Août 2", title:"Reprise Montréal (adaptée)", vol:"44-46 km prévus", volReal:"~50,5 km réalisés", statusEmoji:"🟢", statusText:"objectif dépassé, aucune dérive", open:false, sessions:[
+  s("Mer 29/07","EF + 5×400m","🏃","ef","done","Réalisée","11,6 km",
+    [seg("Échauffement EF",52,"6:18/km",G),seg("Fractions 400m",10,"5:04-5:17/km",FRACC),seg("Récup + retour",10,"trot",GL)],
+    [{val:"161-163",lbl:"Cadence"},{val:"6:18/km",lbl:"Allure EF"}],
+    "Décalée d'un jour (mardi→mercredi). Cadence sur les fractions encore sous la cible de 168 mais en progression.",false,"☀️ ~25°C (historique)"),
+  s("Jeu 30/07","Seuil de référence — 2×12 min","⚡","seuil","done","Réalisée","10,2 km",
+    [seg("Échauffement",16,"6:20/km",G),seg("Seuil 1",12,"5:18/km",SEUILY),seg("Récup",5,"trot",A),seg("Seuil 2",12,"5:16/km",SEUILY),seg("Retour",19,"7:00/km",GL)],
+    [{val:"176-178",lbl:"FC moy"},{val:"182-185",lbl:"FC max"}],
+    "Meilleure séance seuil du cycle jusqu'ici — allures stables sur terrain plat (canal de Lachine), FC parfaitement dans la zone cible. Sert de référence pour comparer les séances futures.",false,"☀️ ~25°C (historique)"),
+  s("Sam 01/08","EF (avec le chien)","🏃","ef","done","Réalisée","8,56 km",[seg("Endurance fondamentale",55,"6:27/km",EFG)],[{val:"155",lbl:"FC moy"},{val:"158",lbl:"Cadence"}],"FC un peu haute pour du EF, probablement lié aux arrêts/relances de la balade et à la fatigue cumulée.",false,"🌧️ pluie légère, ~22°C (historique)"),
+  s("Dim 02/08","Sortie longue","🏔️","sl","done","Réalisée","20,1 km",[seg("Endurance fondamentale",137,"6:47/km",SLB)],[{val:"152",lbl:"FC moy"},{val:"159",lbl:"Cadence"}],"Dépasse la cible de distance (20,1 vs 18 km) sans dérive — canal de Lachine, dénivelé quasi nul, FC stable sur tout le parcours.",false,"🌧️ pluie modérée, ~21°C (historique)")
+]},
+
+{num:"S7", dates:"2026 Août 3 au 9", title:"Volume nominal", vol:"57 km prévus", volReal:"~57-60 km réalisés", statusEmoji:"🟢", statusText:"dérive isolée jeudi, sinon solide", open:false, sessions:[
+  s("Mar 04/08","6×1 km","⚡","seuil","done","Réalisée","13,06 km",
+    [seg("Échauffement",16,"6:23/km",G),seg("Travail",30,"4:58-5:02/km",FRACC),seg("Récupération",16,"trot",A),seg("Retour",16,"6:57/km",GL)],
+    [{val:"163-165",lbl:"Cadence"},{val:"167-198",lbl:"FC"}],
+    "Meilleure cadence du cycle sur les répétitions. Allures très homogènes (4:58-5:02), aucun fade en fin de séance.",false,"☀️ ciel dégagé, ~25°C (historique)"),
+  s("Jeu 06/08","8 km à allure marathon","🏃","ef","warn","Réalisée","10 km",
+    [seg("Échauffement",8,"6:20/km",G),seg("AM bloc 1",22,"5:27/km",T),seg("AM bloc 2",23,"5:40/km",T),seg("Retour",6,"7:43/km",GL)],
+    [{val:"174→185",lbl:"FC (dérive)"}],
+    "Dérive cardiaque marquée sur le 2e bloc : FC +11 bpm, allure -13 s/km. Capteur optique (ceinture oubliée). Confirmée réelle par Pierre — probablement liée à la charge cumulée de la semaine, pas un signal d'alarme isolé.",true,"🌦️ pluie légère, ~22°C (historique)"),
+  s("Sam 08/08","EF — récupération","🏃","ef","done","Réalisée","8 km",[seg("Endurance fondamentale",51,"6:00-6:40/km",EFG)],[],"Séance de récupération après la dérive de jeudi — non détaillée précisément dans ce suivi.",false,"🌧️ pluie modérée, ~21°C (historique)"),
+  s("Dim 09/08","Sortie longue","🏔️","sl","done","Réalisée","26,17 km",[seg("Endurance fondamentale",179,"6:51/km",SLB)],[{val:"147",lbl:"FC moy"},{val:"158",lbl:"Cadence"}],"Plus longue sortie du cycle. FC très maîtrisée malgré la distance — bon signe après l'allègement de samedi.",false,"🌦️ pluie légère, ~22°C (historique)")
+]},
+
+{num:"S8", dates:"2026 Août 10 au 16", title:"Allégée", vol:"46 km prévus", volReal:"~29,3 km à ce jour", statusEmoji:"🟡", statusText:"seuil décalé au samedi, terrain non plat", open:true, sessions:[
+  s("Mardi 11/08","EF","🏃","ef","done","Réalisée","8,61 km",[seg("Endurance fondamentale",54,"6:15/km",EFG)],[{val:"140",lbl:"FC moy"},{val:"149",lbl:"FC max"},{val:"159,5",lbl:"Cadence"}],"Séance impeccable, FC max à seulement 149 — aucune dérive. Bon signe après l'alerte du 06/08.",false,"🌦️ pluie légère, ~23°C (historique)"),
+  s("Sam 15/08","Seuil — 10,7 km dont ~20 min","⚡","seuil","warn","Réalisée · décalée","10,67 km",
+    [seg("Échauffement",15,"6:03/km",G),seg("Seuil",20,"5:14/km",SEUILY),seg("Retour",27,"6:02/km",GL)],
+    [{val:"157",lbl:"FC moy"},{val:"178",lbl:"FC max"},{val:"162",lbl:"Cadence"}],
+    "Décalée de jeudi à samedi. Allure au rendez-vous (5:14/km), mais le bloc seuil affiche une pente moyenne de -3,1% (net descendant) et le retour au calme -7% — terrain non plat. FC (169 moy sur le bloc, 178 max) plus basse que la référence du 30/07 (176-178 moy, 182-185 max) malgré une allure similaire ou plus rapide : signature classique d'un parcours qui gonfle l'allure et comprime la FC. Pas directement comparable à la séance de référence sur plat — à refaire sur le canal de Lachine pour trancher sur la question de la dérive du 06/08.",true,"⛅ ~23°C, 10% pluie (relevé)"),
+  s("Dim 16/08","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"Récupération après le seuil — reste au bas de la fourchette.",false,"🌤️ ~18°C, 10% pluie"),
+  s("Dim 16/08 (SL à recaler)","Sortie longue","🏔️","sl","todo","À venir","20 km",[segR("Endurance fondamentale",120,134,"6:00-6:40/km",SLB)],[{val:"30-40g",lbl:"Glucides avant"},{val:"25-30g/h",lbl:"Pendant"}],"À recaler dans la semaine — semaine décalée d'un jour dans son ensemble.",false,"⛅ ~21°C, 20% pluie (estim.)")
+]},
+
+{num:"S9", dates:"2026 Août 17 au 23", title:"Reprise de volume", vol:"60 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 18/08","4×1600m","⚡","seuil","todo","À venir","12 km",
+    [segR("Échauffement",18,22,"6:00-6:40/km",G),segR("Travail",30,34,"4:50-5:10/km",FRACC),seg("Récupération",9,"trot",A),segR("Retour",15,17,"6:00-6:40/km",GL)],[],
+    "Premier bloc en 1600 m du cycle — format plus long, teste la tenue d'allure sur une distance de rep supérieure.",false,"⛅ ~21°C, 20% pluie"),
+  s("Jeu 20/08","8 km allure marathon","🏃","ef","todo","À venir","12 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
+    "Retest de l'allure marathon après la dérive du 06/08 — à surveiller avec ceinture cardiaque.",false,"⛅ ~19°C, 20% pluie"),
+  s("Sam 22/08","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"☀️ ~23°C, 5% pluie"),
+  s("Dim 23/08","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",SLB)],[],"Nouveau record de distance du cycle.",false,"🍂 ~22°C (estim. saisonnière)")
+]},
+
+{num:"S10", dates:"2026 Août 24 au 30", title:"Pic de volume", vol:"64 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 25/08","5×1600m","⚡","seuil","todo","À venir","12 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Travail",38,42,"4:50-5:10/km",FRACC),seg("Récupération",12,"trot",A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
+  s("Jeu 27/08","10 km allure marathon","🏃","ef","todo","À venir","14 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
+    "Plus long bloc AM du cycle jusqu'ici.",false,"🍂 ~24°C (estim. saisonnière)"),
+  s("Sam 29/08","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
+  s("Dim 30/08","Sortie longue","🏔️","sl","todo","À venir","30 km",[segR("Endurance fondamentale",180,200,"6:00-6:40/km",SLB)],[],"Approche du pic de distance du cycle.",false,"🍂 ~24°C (estim. saisonnière)")
+]},
+
+{num:"S11", dates:"2026 Août 31 au Septembre 6", title:"Pic du cycle", vol:"66 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 01/09","6×1 km","⚡","seuil","todo","À venir","12 km",
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),segR("Travail",29,31,"4:50-5:10/km",FRACC),seg("Récupération",13,"trot",A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+  s("Jeu 03/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+  s("Sam 05/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+  s("Dim 06/09","32 km (10 EF + 12 AM + 10 EF)","🏔️","sl","todo","À venir","32 km",
+    [segR("EF",59,67,"6:00-6:40/km",SLB),segR("Allure marathon",66,68,"5:35-5:40/km",T),segR("EF",59,67,"6:00-6:40/km",SLB)],[],
+    "Plus longue sortie du cycle, avec un bloc à allure marathon inséré au milieu — simulation partielle des sensations de course.",false,"🍂 ~22°C (estim. saisonnière)")
+]},
+
+{num:"S12", dates:"2026 Septembre 7 au 13", title:"Début affûtage progressif", vol:"58 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 08/09","5×1 km","⚡","seuil","todo","À venir","10 km",
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),segR("Travail",24,26,"4:50-5:10/km",FRACC),seg("Récupération",10,"trot",A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
+  s("Jeu 10/09","8 km allure marathon","🏃","ef","todo","À venir","12 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
+  s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
+  s("Dim 13/09","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",SLB)],[],"Léger retrait de volume — début de la gestion vers l'affûtage.",false,"🍂 ~20°C (estim. saisonnière)")
+]},
+
+{num:"S13", dates:"2026 Septembre 14 au 20", title:"Dernier gros bloc", vol:"62 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 15/09","4×1 km","⚡","seuil","todo","À venir","10 km",
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),segR("Travail",19,21,"4:50-5:10/km",FRACC),seg("Récupération",8,"trot",A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
+  s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
+  s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
+  s("Dim 20/09","30 km (15 EF + 10 AM + 5 EF)","🏔️","sl","todo","À venir","30 km",
+    [segR("EF",90,100,"6:00-6:40/km",SLB),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("EF",30,34,"6:00-6:40/km",SLB)],[],
+    "Dernière très longue sortie avant l'affûtage — dernier gros test de l'allure marathon en fin de sortie longue.",false,"🍂 ~19°C (estim. saisonnière)")
+]},
+
+{num:"S14", dates:"2026 Septembre 21 au 27", title:"Affûtage", vol:"48 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 22/09","5×800m","⚡","seuil","todo","À venir","8 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Travail",19,21,"4:50-5:10/km",FRACC),seg("Récupération",6,"trot",A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
+  s("Jeu 24/09","6 km allure marathon","🏃","ef","todo","À venir","10 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",33,35,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
+  s("Sam 26/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
+  s("Dim 27/09","Sortie longue","🏔️","sl","todo","À venir","22 km",[segR("Endurance fondamentale",131,147,"6:00-6:40/km",SLB)],[],"Le volume redescend nettement — début de l'affûtage.",false,"🍂 ~17°C (estim. saisonnière)")
+]},
+
+{num:"S15", dates:"2026 Septembre 28 au Octobre 4", title:"Affûtage final", vol:"38 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  s("Mar 29/09","4×800m","⚡","seuil","todo","À venir","8 km",
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),segR("Travail",15,17,"4:50-5:10/km",FRACC),seg("Récupération",5,"trot",A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
+  s("Jeu 01/10","4 km allure marathon","🏃","ef","todo","À venir","8 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",22,24,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
+  s("Sam 03/10","EF","🏃","ef","todo","À venir","6 km",[segR("Endurance fondamentale",36,40,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
+  s("Dim 04/10","Sortie longue","🏔️","sl","todo","À venir","16 km",[segR("Endurance fondamentale",95,107,"6:00-6:40/km",SLB)],[],"Dernière sortie longue avant la semaine marathon.",false,"🍂 ~14°C (estim. saisonnière)")
+]},
+
+{num:"S16", dates:"2026 Octobre 5 au 11", title:"Semaine marathon", vol:"minimal — jour J dimanche", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+  rest("Lun 05/10","Repos","Prévu."),
+  s("Mar 06/10","EF + 4 accélérations","🏃","ef","todo","À venir","6 km",[segR("Endurance fondamentale + strides",36,40,"6:00-6:40/km + 4×100m",EFG)],[],"Léger, juste pour garder les jambes réactives.",false,"🍂 ~11°C (estim. saisonnière)"),
+  rest("Mer 07/10","Repos","Prévu."),
+  s("Jeu 08/10","EF très légère","🏃","ef","todo","À venir","5 km",[segR("Endurance fondamentale",30,34,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~11°C (estim. saisonnière)"),
+  rest("Ven 09/10","Repos","Prévu."),
+  s("Sam 10/10","Footing très léger","🏃","ef","todo","À venir","20 min",[seg("Footing d'activation",20,"très facile",EFG)],[],"Juste pour se sentir prêt, aucune fatigue à générer.",false,"🍂 ~11°C (estim. saisonnière)"),
+  s("Dim 11/10","🏁 MARATHON","🏁","sl","todo","Jour J","42,195 km",[segR("Course",235,239,"5:41/km cible",T)],[{val:"3h55-3h59",lbl:"Objectif"},{val:"5:41/km",lbl:"Allure cible"}],"Le grand jour. 0-10km: 5:42-5:45/km · 10-30km: 5:38-5:40/km · 30-42km: selon sensations. Hydratation toutes les 20 min, gel toutes les 40 min.",false,"🍂 ~11°C (estim. saisonnière)")
+]}
+
+];
+
+const container = document.getElementById('weeks');
+const allWeekEls = [];
+
+weeks.forEach((w, wi) => {
+  const weekEl = document.createElement('div');
+  weekEl.className = 'week' + (w.open ? ' open' : '');
+
+  const volLine = w.volReal ? `${w.vol} · <b>${w.volReal}</b>` : w.vol;
+
+  weekEl.innerHTML = `
+    <div class="week-head">
+      <div class="wh-left">
+        <span class="wh-num">${w.num}</span>
+        <span class="wh-dates">${w.dates}</span>
+        <span class="wh-title">${w.title}</span>
+        <span class="wh-vol">${volLine}</span>
+      </div>
+      <div class="wh-right">
+        <span class="status ${w.statusEmoji==='🟢'?'done':w.statusEmoji==='🟡'?'warn':'neutral'}"><span class="dot"></span>${w.statusEmoji} ${w.statusText}</span>
+        <span class="wchev">▶</span>
+      </div>
+    </div>
+    <div class="week-body">
+      <table>
+        <thead><tr><th>Séance</th><th>Statut</th><th>Distance</th><th>Météo</th><th>Répartition</th><th></th></tr></thead>
+        <tbody class="wtbody"></tbody>
+      </table>
+    </div>
+  `;
+
+  const head = weekEl.querySelector('.week-head');
+  head.addEventListener('click', () => weekEl.classList.toggle('open'));
+
+  const tbody = weekEl.querySelector('.wtbody');
+
+  w.sessions.forEach((sess) => {
+    if (sess.rest) {
+      const tr = document.createElement('tr');
+      tr.className = 'rest-row';
+      tr.innerHTML = `<td colspan="6">${sess.day} — ${sess.label}${sess.note ? ' · ' + sess.note : ''}</td>`;
+      tbody.appendChild(tr);
+      return;
+    }
+
+    const row = document.createElement('tr');
+    row.className = 'row';
+    row.innerHTML = `
+      <td><div class="icon-cell"><div class="icon ${sess.iconClass}">${sess.icon}</div>
+        <div class="name-block"><div class="day">${sess.day}</div><div class="name">${sess.name}</div></div></div></td>
+      <td><span class="status ${sess.status}"><span class="dot"></span>${sess.statusLabel}</span></td>
+      <td><span class="distance">${sess.distance}</span></td>
+      <td><span class="meteo ${sess.status==='done'?'past':''}">${sess.meteo||'—'}</span></td>
+      <td><div class="mini-bar">${sess.segments.map(sg => `<div class="mseg" style="flex:${sg.min};background:${sg.color};"></div>`).join('')}</div></td>
+      <td style="text-align:right;"><span class="chev">▶</span></td>
+    `;
+
+    const detailRow = document.createElement('tr');
+    detailRow.className = 'detail-row';
+    detailRow.innerHTML = `
+      <td colspan="6"><div class="detail-wrap"><div class="detail-inner">
+        <div class="full-bar">${sess.segments.map(sg => `
+          <div class="seg" style="flex:${sg.min};background:${sg.color};">
+            <div class="seg-label">${sg.label}</div><div class="seg-detail">${sg.range || sg.min+' min'} · ${sg.pace}</div>
+          </div>`).join('')}</div>
+        <div class="metrics-row">${sess.metrics.map(m => `<div class="chip"><b>${m.val}</b><span>${m.lbl}</span></div>`).join('')}</div>
+        <div class="comment ${sess.warn ? 'warn' : ''}">${sess.comment}</div>
+      </div></div></td>
+    `;
+
+    row.addEventListener('click', () => {
+      const isOpen = row.classList.contains('open');
+      row.classList.toggle('open', !isOpen);
+      detailRow.classList.toggle('open', !isOpen);
+    });
+
+    tbody.appendChild(row);
+    tbody.appendChild(detailRow);
+  });
+
+  container.appendChild(weekEl);
+  allWeekEls.push(weekEl);
+});
+
+const toggleInput = document.getElementById('toggleAllInput');
+const toggleLabel = document.getElementById('toggleLabel');
+
+toggleInput.addEventListener('change', () => {
+  const expand = toggleInput.checked;
+  allWeekEls.forEach(w => w.classList.toggle('open', expand));
+  toggleLabel.textContent = expand ? 'Tout réduire' : 'Tout déplier';
+});
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

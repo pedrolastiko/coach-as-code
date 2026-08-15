@@ -30,13 +30,13 @@ Aucune dépendance, aucun build : tout est en HTML/CSS/JS natif dans `index.html
 
 ## Déployer sur GitHub Pages
 
-1. Sur le dépôt GitHub, aller dans **Settings → Pages**.
-2. Sous **Build and deployment**, choisir **Source : Deploy from a branch**.
-3. Sélectionner la branche `main` et le dossier **/ (root)**, puis **Save**.
-4. Après une à deux minutes, l'app est disponible à l'adresse :
-   `https://<ton-pseudo-github>.github.io/coach-as-code/`
+Le déploiement est automatisé par le workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) : à chaque push sur `main`, GitHub Actions publie le contenu du dépôt sur GitHub Pages (aucun build, la page est servie telle quelle).
 
-Aucune action GitHub Actions n'est nécessaire : la page est statique et servie telle quelle.
+- Au premier déploiement, GitHub configure automatiquement la source Pages sur **« GitHub Actions »** (visible ensuite dans **Settings → Pages**).
+- Si ce n'est pas le cas, il suffit d'aller dans **Settings → Pages → Build and deployment → Source** et de sélectionner **GitHub Actions**.
+- L'avancement du déploiement se suit dans l'onglet **Actions** du dépôt.
+- Une fois terminé, l'app est disponible à l'adresse :
+  `https://<ton-pseudo-github>.github.io/coach-as-code/`
 
 ## Installer l'app sur son téléphone
 

@@ -165,8 +165,7 @@
     <span><i style="background:#E2637A"></i>Fractionné</span>
     <span><i style="background:#4FA8E8"></i>Sortie longue</span>
     <span><i style="background:#1d9e75"></i>Allure marathon</span>
-    <span><i style="background:#888780"></i>Échauffement / retour au calme</span>
-    <span><i style="background:#f0ad4e"></i>Récupération entre répétitions</span>
+    <span><i style="background:#888780"></i>Échauffement / récupération / retour au calme</span>
   </div>
 
   <div id="weeks"></div>
@@ -174,7 +173,7 @@
 </div>
 
 <script>
-const G="#888780", GL="#b4b2a9", A="#f0ad4e", T="#1d9e75";
+const G="#888780", GL="#b4b2a9", T="#1d9e75";
 const EFG="#4EB876", SEUILY="#F0B429", FRACC="#E2637A", SLB="#4FA8E8";
 function seg(label,min,pace,color){return {label,min:Math.round(min),pace,color};}
 function segR(label,minLo,minHi,pace,color){return {label,min:Math.round((minLo+minHi)/2),range:`${minLo}-${minHi} min`,pace,color};}
@@ -219,7 +218,7 @@ const weeks = [
 
 {num:"S2", dates:"2026 Juin 22 au 28", title:"Base", vol:"43 km prévus", volReal:"~34,8 km observés (S2E1-E3)", statusEmoji:"🟢", statusText:"bonne exécution des fractions", open:false, sessions:[
   s("Ven 26/06","EF + 7×400m — Juno Beach","⚡","seuil","done","Réalisée","12,4 km",
-    [seg("Échauffement",15,"6:00-6:40/km",G),...repBlock(7,"400 m",8,"~5:11/km",FRACC,26,A)],
+    [seg("Échauffement",15,"6:00-6:40/km",G),...repBlock(7,"400 m",8,"~5:11/km",FRACC,26,G)],
     [{val:"162",lbl:"FC moy"},{val:"183",lbl:"FC max"},{val:"156",lbl:"Cadence"}],
     "7×400m tenus autour de 5:11/km (proche de la cible 4:50-5:00, légèrement au-dessus). Séance faite en France (bord de mer, Normandie) avant le retour à Montréal.",false,"⛅ ~18°C (historique, Normandie)"),
   s("Sam 27/06","EF","🏃","ef","done","Réalisée","7,19 km",[seg("Endurance fondamentale",43,"6:01/km",EFG)],[],"Footing court, conforme à l'esprit EF de la semaine.",false,"⛅ ~19°C (historique)"),
@@ -231,7 +230,7 @@ const weeks = [
 
 {num:"S3", dates:"2026 Juin 29 au Juillet 5", title:"Base", vol:"46 km prévus", volReal:"~44,4 km réalisés (94%)", statusEmoji:"🟢", statusText:"semaine conforme au plan", open:false, sessions:[
   s("Mar 30/06","EF + 8×400m","⚡","seuil","done","Réalisée","10,0 km",
-    [seg("Échauffement",17,"6:00-6:40/km",G),...repBlock(8,"400 m",9,"~4:50/km",FRACC,34,A)],
+    [seg("Échauffement",17,"6:00-6:40/km",G),...repBlock(8,"400 m",9,"~4:50/km",FRACC,34,G)],
     [{val:"169",lbl:"FC moy"},{val:"198",lbl:"FC max"},{val:"157",lbl:"Cadence"}],
     "8×400m, allures rapides (meilleur 400m à 1:47, très en dessous de la cible) — séance intense, FC max à 198 déjà cohérente avec le profil cardiaque élevé de Pierre.",false,"☀️ ~24°C (historique, rég. parisienne)"),
   s("Ven 03/07","8 km incl. 20 min seuil","⚡","seuil","done","Réalisée","8,39 km",
@@ -267,11 +266,11 @@ const weeks = [
 
 {num:"S6", dates:"2026 Juillet 27 au Août 2", title:"Reprise Montréal (adaptée)", vol:"44-46 km prévus", volReal:"~50,5 km réalisés", statusEmoji:"🟢", statusText:"objectif dépassé, aucune dérive", open:false, sessions:[
   s("Mer 29/07","EF + 5×400m","🏃","ef","done","Réalisée","11,6 km",
-    [seg("Échauffement EF",52,"6:18/km",G),...repBlock(5,"400 m",10,"5:04-5:17/km",FRACC,10,A)],
+    [seg("Échauffement EF",52,"6:18/km",G),...repBlock(5,"400 m",10,"5:04-5:17/km",FRACC,10,G)],
     [{val:"161-163",lbl:"Cadence"},{val:"6:18/km",lbl:"Allure EF"}],
     "Décalée d'un jour (mardi→mercredi). Cadence sur les fractions encore sous la cible de 168 mais en progression.",false,"☀️ ~25°C (historique)"),
   s("Jeu 30/07","Seuil de référence — 2×12 min","⚡","seuil","done","Réalisée","10,2 km",
-    [seg("Échauffement",16,"6:20/km",G),seg("Seuil 1",12,"5:18/km",SEUILY),seg("Récup",5,"trot",A),seg("Seuil 2",12,"5:16/km",SEUILY),seg("Retour",19,"7:00/km",GL)],
+    [seg("Échauffement",16,"6:20/km",G),seg("Seuil 1",12,"5:18/km",SEUILY),seg("Récup",5,"trot",G),seg("Seuil 2",12,"5:16/km",SEUILY),seg("Retour",19,"7:00/km",GL)],
     [{val:"176-178",lbl:"FC moy"},{val:"182-185",lbl:"FC max"}],
     "Meilleure séance seuil du cycle jusqu'ici — allures stables sur terrain plat (canal de Lachine), FC parfaitement dans la zone cible. Sert de référence pour comparer les séances futures.",false,"☀️ ~25°C (historique)"),
   s("Sam 01/08","EF (avec le chien)","🏃","ef","done","Réalisée","8,56 km",[seg("Endurance fondamentale",55,"6:27/km",EFG)],[{val:"155",lbl:"FC moy"},{val:"158",lbl:"Cadence"}],"FC un peu haute pour du EF, probablement lié aux arrêts/relances de la balade et à la fatigue cumulée.",false,"🌧️ pluie légère, ~22°C (historique)"),
@@ -280,7 +279,7 @@ const weeks = [
 
 {num:"S7", dates:"2026 Août 3 au 9", title:"Volume nominal", vol:"57 km prévus", volReal:"~57-60 km réalisés", statusEmoji:"🟢", statusText:"dérive isolée jeudi, sinon solide", open:false, sessions:[
   s("Mar 04/08","6×1 km","⚡","seuil","done","Réalisée","13,06 km",
-    [seg("Échauffement",16,"6:23/km",G),...repBlock(6,"1 km",30,"4:58-5:02/km",FRACC,16,A),seg("Retour",16,"6:57/km",GL)],
+    [seg("Échauffement",16,"6:23/km",G),...repBlock(6,"1 km",30,"4:58-5:02/km",FRACC,16,G),seg("Retour",16,"6:57/km",GL)],
     [{val:"163-165",lbl:"Cadence"},{val:"167-198",lbl:"FC"}],
     "Meilleure cadence du cycle sur les répétitions. Allures très homogènes (4:58-5:02), aucun fade en fin de séance.",false,"☀️ ciel dégagé, ~25°C (historique)"),
   s("Jeu 06/08","8 km à allure marathon","🏃","ef","warn","Réalisée","10 km",
@@ -303,7 +302,7 @@ const weeks = [
 
 {num:"S9", dates:"2026 Août 17 au 23", title:"Reprise de volume", vol:"60 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 18/08","4×1600m","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",18,22,"6:00-6:40/km",G),...repBlockR(4,"1,6 km",30,34,"4:50-5:10/km",FRACC,9,A),segR("Retour",15,17,"6:00-6:40/km",GL)],[],
+    [segR("Échauffement",18,22,"6:00-6:40/km",G),...repBlockR(4,"1,6 km",30,34,"4:50-5:10/km",FRACC,9,G),segR("Retour",15,17,"6:00-6:40/km",GL)],[],
     "Premier bloc en 1600 m du cycle — format plus long, teste la tenue d'allure sur une distance de rep supérieure.",false,"⛅ ~21°C, 20% pluie"),
   s("Jeu 20/08","8 km allure marathon","🏃","ef","todo","À venir","12 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
@@ -314,7 +313,7 @@ const weeks = [
 
 {num:"S10", dates:"2026 Août 24 au 30", title:"Pic de volume", vol:"64 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 25/08","5×1600m","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"1,6 km",38,42,"4:50-5:10/km",FRACC,12,A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"1,6 km",38,42,"4:50-5:10/km",FRACC,12,G),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
   s("Jeu 27/08","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
     "Plus long bloc AM du cycle jusqu'ici.",false,"🍂 ~24°C (estim. saisonnière)"),
@@ -324,7 +323,7 @@ const weeks = [
 
 {num:"S11", dates:"2026 Août 31 au Septembre 6", title:"Pic du cycle", vol:"66 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 01/09","6×1 km","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(6,"1 km",29,31,"4:50-5:10/km",FRACC,13,A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(6,"1 km",29,31,"4:50-5:10/km",FRACC,13,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Jeu 03/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Sam 05/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
@@ -335,7 +334,7 @@ const weeks = [
 
 {num:"S12", dates:"2026 Septembre 7 au 13", title:"Début affûtage progressif", vol:"58 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 08/09","5×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
   s("Jeu 10/09","8 km allure marathon","🏃","ef","todo","À venir","12 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
   s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
@@ -344,7 +343,7 @@ const weeks = [
 
 {num:"S13", dates:"2026 Septembre 14 au 20", title:"Dernier gros bloc", vol:"62 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 15/09","4×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
   s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
   s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
@@ -355,7 +354,7 @@ const weeks = [
 
 {num:"S14", dates:"2026 Septembre 21 au 27", title:"Affûtage", vol:"48 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 22/09","5×800m","⚡","seuil","todo","À venir","8 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"800 m",19,21,"4:50-5:10/km",FRACC,6,A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"800 m",19,21,"4:50-5:10/km",FRACC,6,G),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
   s("Jeu 24/09","6 km allure marathon","🏃","ef","todo","À venir","10 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",33,35,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
   s("Sam 26/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
@@ -364,7 +363,7 @@ const weeks = [
 
 {num:"S15", dates:"2026 Septembre 28 au Octobre 4", title:"Affûtage final", vol:"38 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 29/09","4×800m","⚡","seuil","todo","À venir","8 km",
-    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(4,"800 m",15,17,"4:50-5:10/km",FRACC,5,A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(4,"800 m",15,17,"4:50-5:10/km",FRACC,5,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
   s("Jeu 01/10","4 km allure marathon","🏃","ef","todo","À venir","8 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",22,24,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
   s("Sam 03/10","EF","🏃","ef","todo","À venir","6 km",[segR("Endurance fondamentale",36,40,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),

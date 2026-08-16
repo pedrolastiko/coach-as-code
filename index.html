@@ -219,7 +219,7 @@ const weeks = [
 
 {num:"S2", dates:"2026 Juin 22 au 28", title:"Base", vol:"43 km prévus", volReal:"~34,8 km observés (S2E1-E3)", statusEmoji:"🟢", statusText:"bonne exécution des fractions", open:false, sessions:[
   s("Ven 26/06","EF + 7×400m — Juno Beach","⚡","seuil","done","Réalisée","12,4 km",
-    [seg("Échauffement",15,"6:00-6:40/km",G),seg("Fractions 400m",8,"~5:11/km",FRACC),seg("Récup + retour",26,"trot/EF",GL)],
+    [seg("Échauffement",15,"6:00-6:40/km",G),...repBlock(7,"400 m",8,"~5:11/km",FRACC,26,A)],
     [{val:"162",lbl:"FC moy"},{val:"183",lbl:"FC max"},{val:"156",lbl:"Cadence"}],
     "7×400m tenus autour de 5:11/km (proche de la cible 4:50-5:00, légèrement au-dessus). Séance faite en France (bord de mer, Normandie) avant le retour à Montréal.",false,"⛅ ~18°C (historique, Normandie)"),
   s("Sam 27/06","EF","🏃","ef","done","Réalisée","7,19 km",[seg("Endurance fondamentale",43,"6:01/km",EFG)],[],"Footing court, conforme à l'esprit EF de la semaine.",false,"⛅ ~19°C (historique)"),
@@ -231,7 +231,7 @@ const weeks = [
 
 {num:"S3", dates:"2026 Juin 29 au Juillet 5", title:"Base", vol:"46 km prévus", volReal:"~44,4 km réalisés (94%)", statusEmoji:"🟢", statusText:"semaine conforme au plan", open:false, sessions:[
   s("Mar 30/06","EF + 8×400m","⚡","seuil","done","Réalisée","10,0 km",
-    [seg("Échauffement",17,"6:00-6:40/km",G),seg("Fractions 400m",9,"~4:50/km",FRACC),seg("Récup + retour",34,"trot/EF",GL)],
+    [seg("Échauffement",17,"6:00-6:40/km",G),...repBlock(8,"400 m",9,"~4:50/km",FRACC,34,A)],
     [{val:"169",lbl:"FC moy"},{val:"198",lbl:"FC max"},{val:"157",lbl:"Cadence"}],
     "8×400m, allures rapides (meilleur 400m à 1:47, très en dessous de la cible) — séance intense, FC max à 198 déjà cohérente avec le profil cardiaque élevé de Pierre.",false,"☀️ ~24°C (historique, rég. parisienne)"),
   s("Ven 03/07","8 km incl. 20 min seuil","⚡","seuil","done","Réalisée","8,39 km",
@@ -267,7 +267,7 @@ const weeks = [
 
 {num:"S6", dates:"2026 Juillet 27 au Août 2", title:"Reprise Montréal (adaptée)", vol:"44-46 km prévus", volReal:"~50,5 km réalisés", statusEmoji:"🟢", statusText:"objectif dépassé, aucune dérive", open:false, sessions:[
   s("Mer 29/07","EF + 5×400m","🏃","ef","done","Réalisée","11,6 km",
-    [seg("Échauffement EF",52,"6:18/km",G),seg("Fractions 400m",10,"5:04-5:17/km",FRACC),seg("Récup + retour",10,"trot",GL)],
+    [seg("Échauffement EF",52,"6:18/km",G),...repBlock(5,"400 m",10,"5:04-5:17/km",FRACC,10,A)],
     [{val:"161-163",lbl:"Cadence"},{val:"6:18/km",lbl:"Allure EF"}],
     "Décalée d'un jour (mardi→mercredi). Cadence sur les fractions encore sous la cible de 168 mais en progression.",false,"☀️ ~25°C (historique)"),
   s("Jeu 30/07","Seuil de référence — 2×12 min","⚡","seuil","done","Réalisée","10,2 km",

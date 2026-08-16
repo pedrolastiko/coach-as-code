@@ -101,10 +101,11 @@
   .detail-wrap{max-height:0;overflow:hidden;transition:max-height .28s ease;background:#fbfbfe;}
   .detail-row.open .detail-wrap{max-height:420px;}
   .detail-inner{padding:16px 24px 22px;}
-  .full-bar{display:flex;width:100%;height:44px;border-radius:8px;overflow:hidden;margin-bottom:12px;}
-  .full-bar .seg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:2px 3px;min-width:0;}
+  .full-bar-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;margin-bottom:12px;width:0;min-width:100%;}
+  .full-bar{display:flex;width:100%;height:44px;}
+  .full-bar .seg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:2px 3px;min-width:0;overflow:hidden;}
   .full-bar .seg .seg-label{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  .full-bar .seg .seg-detail{font-family:"Courier New",monospace;font-size:8.5px;opacity:.92;white-space:nowrap;}
+  .full-bar .seg .seg-detail{font-family:"Courier New",monospace;font-size:8.5px;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
   .metrics-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
   .chip{background:#f2f3fa;border-radius:20px;padding:4px 10px;font-size:11.5px;display:flex;gap:5px;align-items:baseline;}
   .chip b{font-family:"Courier New",monospace;font-size:12px;} .chip span{color:var(--ink-soft);font-size:10px;}
@@ -181,6 +182,27 @@ function s(day,name,icon,iconClass,status,statusLabel,distance,segments,metrics,
   return {day,name,icon,iconClass,status,statusLabel,distance,segments,metrics,comment,warn:!!warn,meteo};
 }
 function rest(day,label,note){ return {rest:true, day, label, note}; }
+function repBlock(reps,workLabel,workMin,workPace,workColor,recovMin,recovColor){
+  const segs = [];
+  const wBase = Math.floor(workMin/reps), wRem = workMin - wBase*reps;
+  const rBase = Math.floor(recovMin/reps), rRem = recovMin - rBase*reps;
+  for(let i=0;i<reps;i++){
+    segs.push(seg(workLabel, wBase + (i<wRem?1:0), workPace, workColor));
+    segs.push(seg("Récup", rBase + (i<rRem?1:0), "trot", recovColor));
+  }
+  return segs;
+}
+function repBlockR(reps,workLabel,workMinLo,workMinHi,workPace,workColor,recovMin,recovColor){
+  const segs = [];
+  const wLo = Math.max(1, Math.round(workMinLo/reps));
+  const wHi = Math.max(wLo, Math.round(workMinHi/reps));
+  const rBase = Math.floor(recovMin/reps), rRem = recovMin - rBase*reps;
+  for(let i=0;i<reps;i++){
+    segs.push(segR(workLabel, wLo, wHi, workPace, workColor));
+    segs.push(seg("Récup", rBase + (i<rRem?1:0), "trot", recovColor));
+  }
+  return segs;
+}
 
 const weeks = [
 
@@ -258,7 +280,7 @@ const weeks = [
 
 {num:"S7", dates:"2026 Août 3 au 9", title:"Volume nominal", vol:"57 km prévus", volReal:"~57-60 km réalisés", statusEmoji:"🟢", statusText:"dérive isolée jeudi, sinon solide", open:false, sessions:[
   s("Mar 04/08","6×1 km","⚡","seuil","done","Réalisée","13,06 km",
-    [seg("Échauffement",16,"6:23/km",G),seg("Travail",30,"4:58-5:02/km",FRACC),seg("Récupération",16,"trot",A),seg("Retour",16,"6:57/km",GL)],
+    [seg("Échauffement",16,"6:23/km",G),...repBlock(6,"1 km",30,"4:58-5:02/km",FRACC,16,A),seg("Retour",16,"6:57/km",GL)],
     [{val:"163-165",lbl:"Cadence"},{val:"167-198",lbl:"FC"}],
     "Meilleure cadence du cycle sur les répétitions. Allures très homogènes (4:58-5:02), aucun fade en fin de séance.",false,"☀️ ciel dégagé, ~25°C (historique)"),
   s("Jeu 06/08","8 km à allure marathon","🏃","ef","warn","Réalisée","10 km",
@@ -281,7 +303,7 @@ const weeks = [
 
 {num:"S9", dates:"2026 Août 17 au 23", title:"Reprise de volume", vol:"60 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 18/08","4×1600m","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",18,22,"6:00-6:40/km",G),segR("Travail",30,34,"4:50-5:10/km",FRACC),seg("Récupération",9,"trot",A),segR("Retour",15,17,"6:00-6:40/km",GL)],[],
+    [segR("Échauffement",18,22,"6:00-6:40/km",G),...repBlockR(4,"1,6 km",30,34,"4:50-5:10/km",FRACC,9,A),segR("Retour",15,17,"6:00-6:40/km",GL)],[],
     "Premier bloc en 1600 m du cycle — format plus long, teste la tenue d'allure sur une distance de rep supérieure.",false,"⛅ ~21°C, 20% pluie"),
   s("Jeu 20/08","8 km allure marathon","🏃","ef","todo","À venir","12 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
@@ -292,7 +314,7 @@ const weeks = [
 
 {num:"S10", dates:"2026 Août 24 au 30", title:"Pic de volume", vol:"64 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 25/08","5×1600m","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Travail",38,42,"4:50-5:10/km",FRACC),seg("Récupération",12,"trot",A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"1,6 km",38,42,"4:50-5:10/km",FRACC,12,A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
   s("Jeu 27/08","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
     "Plus long bloc AM du cycle jusqu'ici.",false,"🍂 ~24°C (estim. saisonnière)"),
@@ -302,7 +324,7 @@ const weeks = [
 
 {num:"S11", dates:"2026 Août 31 au Septembre 6", title:"Pic du cycle", vol:"66 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 01/09","6×1 km","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),segR("Travail",29,31,"4:50-5:10/km",FRACC),seg("Récupération",13,"trot",A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(6,"1 km",29,31,"4:50-5:10/km",FRACC,13,A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Jeu 03/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Sam 05/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
@@ -313,7 +335,7 @@ const weeks = [
 
 {num:"S12", dates:"2026 Septembre 7 au 13", title:"Début affûtage progressif", vol:"58 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 08/09","5×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",16,18,"6:00-6:40/km",G),segR("Travail",24,26,"4:50-5:10/km",FRACC),seg("Récupération",10,"trot",A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
   s("Jeu 10/09","8 km allure marathon","🏃","ef","todo","À venir","12 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
   s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
@@ -322,7 +344,7 @@ const weeks = [
 
 {num:"S13", dates:"2026 Septembre 14 au 20", title:"Dernier gros bloc", vol:"62 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 15/09","4×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),segR("Travail",19,21,"4:50-5:10/km",FRACC),seg("Récupération",8,"trot",A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,A),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
   s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
   s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
@@ -333,7 +355,7 @@ const weeks = [
 
 {num:"S14", dates:"2026 Septembre 21 au 27", title:"Affûtage", vol:"48 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 22/09","5×800m","⚡","seuil","todo","À venir","8 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Travail",19,21,"4:50-5:10/km",FRACC),seg("Récupération",6,"trot",A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"800 m",19,21,"4:50-5:10/km",FRACC,6,A),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
   s("Jeu 24/09","6 km allure marathon","🏃","ef","todo","À venir","10 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",33,35,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
   s("Sam 26/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
@@ -342,7 +364,7 @@ const weeks = [
 
 {num:"S15", dates:"2026 Septembre 28 au Octobre 4", title:"Affûtage final", vol:"38 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 29/09","4×800m","⚡","seuil","todo","À venir","8 km",
-    [segR("Échauffement",16,18,"6:00-6:40/km",G),segR("Travail",15,17,"4:50-5:10/km",FRACC),seg("Récupération",5,"trot",A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(4,"800 m",15,17,"4:50-5:10/km",FRACC,5,A),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
   s("Jeu 01/10","4 km allure marathon","🏃","ef","todo","À venir","8 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",22,24,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
   s("Sam 03/10","EF","🏃","ef","todo","À venir","6 km",[segR("Endurance fondamentale",36,40,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~14°C (estim. saisonnière)"),
@@ -425,10 +447,10 @@ weeks.forEach((w, wi) => {
     detailRow.className = 'detail-row';
     detailRow.innerHTML = `
       <td colspan="6"><div class="detail-wrap"><div class="detail-inner">
-        <div class="full-bar">${sess.segments.map(sg => `
-          <div class="seg" style="flex:${sg.min};background:${sg.color};">
+        <div class="full-bar-scroll"><div class="full-bar">${sess.segments.map(sg => `
+          <div class="seg" style="flex:${sg.min} 0 56px;background:${sg.color};">
             <div class="seg-label">${sg.label}</div><div class="seg-detail">${sg.range || sg.min+' min'} · ${sg.pace}</div>
-          </div>`).join('')}</div>
+          </div>`).join('')}</div></div>
         <div class="metrics-row">${sess.metrics.map(m => `<div class="chip"><b>${m.val}</b><span>${m.lbl}</span></div>`).join('')}</div>
         <div class="comment ${sess.warn ? 'warn' : ''}">${sess.comment}</div>
       </div></div></td>

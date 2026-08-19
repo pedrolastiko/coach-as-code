@@ -373,15 +373,6 @@ const weeks = [
 
 ];
 
-const today = new Date();
-today.setHours(0,0,0,0);
-let currentWeekIdx = 0;
-weeks.forEach((w, i) => {
-  w.open = false;
-  if (new Date(w.start) <= today) currentWeekIdx = i;
-});
-weeks[currentWeekIdx].open = true;
-
 const container = document.getElementById('weeks');
 const allWeekEls = [];
 

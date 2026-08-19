@@ -1,4 +1,4 @@
-const CACHE_NAME = "plan-marathon-v8";
+const CACHE_NAME = "plan-marathon-v9";
 const ASSETS = [
   "./index.html",
   "./manifest.json",

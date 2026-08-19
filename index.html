@@ -204,7 +204,7 @@ function repBlockR(reps,workLabel,workMinLo,workMinHi,workPace,workColor,recovMi
 
 const weeks = [
 
-{num:"S1", dates:"2026 Juin 15 au 21", title:"Base", vol:"38 km prévus", volReal:"~ 26,5 km observés (S1E2 + S1E3)", statusEmoji:"🟢", statusText:"séances qualité solides", open:false, sessions:[
+{num:"S1", dates:"2026 Juin 15 au 21", start:"2026-06-15", title:"Base", vol:"38 km prévus", volReal:"~ 26,5 km observés (S1E2 + S1E3)", statusEmoji:"🟢", statusText:"séances qualité solides", open:false, sessions:[
   s("Sam 20/06","EF (3×8min @5:15)","⚡","seuil","done","Réalisée","8,21 km",
     [seg("Endurance + seuil",46,"5:15/km sur les blocs",FRACC)],
     [{val:"173",lbl:"FC moy"},{val:"190",lbl:"FC max"},{val:"161",lbl:"Cadence"}],
@@ -215,7 +215,7 @@ const weeks = [
     "Beaucoup plus long et vallonné (364 m D+) qu'un simple footing EF — probablement une sortie trail improvisée plutôt que la sortie longue nominale de 14 km. FC bien maîtrisée malgré le dénivelé.",false,"🌤️ ~19°C (historique, Montréal)")
 ]},
 
-{num:"S2", dates:"2026 Juin 22 au 28", title:"Base", vol:"43 km prévus", volReal:"~34,8 km observés (S2E1-E3)", statusEmoji:"🟢", statusText:"bonne exécution des fractions", open:false, sessions:[
+{num:"S2", dates:"2026 Juin 22 au 28", start:"2026-06-22", title:"Base", vol:"43 km prévus", volReal:"~34,8 km observés (S2E1-E3)", statusEmoji:"🟢", statusText:"bonne exécution des fractions", open:false, sessions:[
   s("Ven 26/06","EF + 7×400m — Juno Beach","⚡","seuil","done","Réalisée","12,4 km",
     [seg("Échauffement",15,"6:00-6:40/km",G),...repBlock(7,"400 m",8,"~5:11/km",FRACC,26,G)],
     [{val:"162",lbl:"FC moy"},{val:"183",lbl:"FC max"},{val:"156",lbl:"Cadence"}],
@@ -227,7 +227,7 @@ const weeks = [
     "Légèrement en dessous de la cible (15,2 vs 16 km) mais dans la marge de tolérance du plan (±10%). FC basse et stable.",false,"☀️ ~20°C (historique, Normandie)")
 ]},
 
-{num:"S3", dates:"2026 Juin 29 au Juillet 5", title:"Base", vol:"46 km prévus", volReal:"~44,4 km réalisés (94%)", statusEmoji:"🟢", statusText:"semaine conforme au plan", open:false, sessions:[
+{num:"S3", dates:"2026 Juin 29 au Juillet 5", start:"2026-06-29", title:"Base", vol:"46 km prévus", volReal:"~44,4 km réalisés (94%)", statusEmoji:"🟢", statusText:"semaine conforme au plan", open:false, sessions:[
   s("Mar 30/06","EF + 8×400m","⚡","seuil","done","Réalisée","10,0 km",
     [seg("Échauffement",17,"6:00-6:40/km",G),...repBlock(8,"400 m",9,"~4:50/km",FRACC,34,G)],
     [{val:"169",lbl:"FC moy"},{val:"198",lbl:"FC max"},{val:"157",lbl:"Cadence"}],
@@ -243,7 +243,7 @@ const weeks = [
     "Distance cible atteinte (18,6 vs 18 km). Parcours vallonné (224 m D+, encore en France) — FC bien maîtrisée malgré le dénivelé.",false,"☀️ ~24°C (historique, rég. parisienne)")
 ]},
 
-{num:"S4", dates:"2026 Juillet 7 au 14", title:"Mini-affûtage (adaptée)", vol:"~45 km prévus", volReal:"38,8 km réalisés (86%)", statusEmoji:"🟡", statusText:"léger retard, séances valides", open:false, sessions:[
+{num:"S4", dates:"2026 Juillet 7 au 14", start:"2026-07-07", title:"Mini-affûtage (adaptée)", vol:"~45 km prévus", volReal:"38,8 km réalisés (86%)", statusEmoji:"🟡", statusText:"léger retard, séances valides", open:false, sessions:[
   s("Mar 07/07","EF","🏃","ef","done","Réalisée","10,6 km",[seg("Endurance fondamentale",70,"6:38/km",EFG)],[{val:"6:38/km",lbl:"Allure"}],"Séance propre, dans la fenêtre EF.",false,"☀️ ~30°C (historique, Toulouse/Tarn)"),
   s("Ven 10/07","EF + 12 min seuil","⚡","seuil","done","Réalisée","7,1 km",[seg("Échauffement",32,"6:33/km",G),seg("Seuil",12,"5:20/km",SEUILY)],[{val:"5:20/km",lbl:"Allure seuil"}],"Séance de référence de l'époque, allure seuil tenue proprement.",false,"☀️ ~29°C (historique, Toulouse/Tarn)"),
   rest("Sam 11/07","Repos","Prévu."),
@@ -251,19 +251,19 @@ const weeks = [
   s("Mar 14/07","Sortie longue — Château de Penne","🏔️","sl","warn","Réalisée · substituée","15,0 km",[seg("Endurance fondamentale",118,"7:52/km",EFG)],[{val:"1h58",lbl:"Durée"},{val:"297 m",lbl:"D+"},{val:"196",lbl:"FC max"}],"Remplace le Trail des Bartàs (25 km/1100 m D+, annulé pour canicule ~35°C). Stimulus d'endurance réel mais coûteux : FC max 196, cadence effondrée à 151 spm, effort à jeun par forte chaleur.",true,"🔥 ~35°C, canicule (confirmé)")
 ]},
 
-{num:"S5", dates:"2026 Juillet 15 au 19", title:"Récupération / transition", vol:"variable", volReal:"~9,2 km réalisés", statusEmoji:"🟡", statusText:"trou de volume lié aux déplacements", open:false, sessions:[
+{num:"S5", dates:"2026 Juillet 15 au 19", start:"2026-07-15", title:"Récupération / transition", vol:"variable", volReal:"~9,2 km réalisés", statusEmoji:"🟡", statusText:"trou de volume lié aux déplacements", open:false, sessions:[
   s("Jeu 16/07","Via Ferrata","⛰️","cross","done","Cross-training","—",[],[],"Roc d'Anglars — activité hors course, pas de stimulus running direct.",false),
   s("Sam 18/07","EF (S5E2)","🏃","ef","done","Réalisée","9,25 km",[seg("Endurance fondamentale",57,"6:12/km",EFG)],[{val:"6:12/km",lbl:"Allure"},{val:"153",lbl:"FC moy"}],"Séance propre, plat, dans la fenêtre EF.",false,"☀️ ~28°C (historique, Tarn)"),
   rest("Dimanche 19/07","Repos","Prévu."),
   rest("20-24/07","Vol Paris → Montréal + jetlag","Aucune course sur cette période — déplacement transatlantique, 6h de décalage vers l'ouest.")
 ]},
 
-{num:"Reprise", dates:"2026 Juillet 25 au 26", title:"Réamorçage post-vol", vol:"faible volume, intentionnel", statusEmoji:"🟢", statusText:"réamorçage réussi", open:false, sessions:[
+{num:"Reprise", dates:"2026 Juillet 25 au 26", start:"2026-07-25", title:"Réamorçage post-vol", vol:"faible volume, intentionnel", statusEmoji:"🟢", statusText:"réamorçage réussi", open:false, sessions:[
   s("Sam 25/07","EF très facile","🏃","ef","done","Réalisée","6,0 km",[seg("Endurance fondamentale",37,"6:14/km",EFG)],[{val:"6:14/km",lbl:"Allure"},{val:"150",lbl:"FC moy"},{val:"159",lbl:"Cadence"}],"Un peu plus vite que la consigne (6:14 vs 6:30-6:50) mais rien d'inquiétant sur 6 km — bonne reprise après 7 jours off et le vol.",false,"🌤️ ~24°C (historique, Montréal)"),
   rest("Dimanche 26/07","Repos / marche","70% de pluie annoncée — recalage sur l'heure locale.")
 ]},
 
-{num:"S6", dates:"2026 Juillet 27 au Août 2", title:"Reprise Montréal (adaptée)", vol:"44-46 km prévus", volReal:"~50,5 km réalisés", statusEmoji:"🟢", statusText:"objectif dépassé, aucune dérive", open:false, sessions:[
+{num:"S6", dates:"2026 Juillet 27 au Août 2", start:"2026-07-27", title:"Reprise Montréal (adaptée)", vol:"44-46 km prévus", volReal:"~50,5 km réalisés", statusEmoji:"🟢", statusText:"objectif dépassé, aucune dérive", open:false, sessions:[
   s("Mer 29/07","EF + 5×400m","🏃","ef","done","Réalisée","11,6 km",
     [seg("Échauffement EF",52,"6:18/km",G),...repBlock(5,"400 m",10,"5:04-5:17/km",FRACC,10,G)],
     [{val:"161-163",lbl:"Cadence"},{val:"6:18/km",lbl:"Allure EF"}],
@@ -276,7 +276,7 @@ const weeks = [
   s("Dim 02/08","Sortie longue","🏔️","sl","done","Réalisée","20,1 km",[seg("Endurance fondamentale",137,"6:47/km",EFG)],[{val:"152",lbl:"FC moy"},{val:"159",lbl:"Cadence"}],"Dépasse la cible de distance (20,1 vs 18 km) sans dérive — canal de Lachine, dénivelé quasi nul, FC stable sur tout le parcours.",false,"🌧️ pluie modérée, ~21°C (historique)")
 ]},
 
-{num:"S7", dates:"2026 Août 3 au 9", title:"Volume nominal", vol:"57 km prévus", volReal:"~57-60 km réalisés", statusEmoji:"🟢", statusText:"dérive isolée jeudi, sinon solide", open:false, sessions:[
+{num:"S7", dates:"2026 Août 3 au 9", start:"2026-08-03", title:"Volume nominal", vol:"57 km prévus", volReal:"~57-60 km réalisés", statusEmoji:"🟢", statusText:"dérive isolée jeudi, sinon solide", open:false, sessions:[
   s("Mar 04/08","6×1 km","⚡","seuil","done","Réalisée","13,06 km",
     [seg("Échauffement",16,"6:23/km",G),...repBlock(6,"1 km",30,"4:58-5:02/km",FRACC,16,G),seg("Retour",16,"6:57/km",GL)],
     [{val:"163-165",lbl:"Cadence"},{val:"167-198",lbl:"FC"}],
@@ -289,7 +289,7 @@ const weeks = [
   s("Dim 09/08","Sortie longue","🏔️","sl","done","Réalisée","26,17 km",[seg("Endurance fondamentale",179,"6:51/km",EFG)],[{val:"147",lbl:"FC moy"},{val:"158",lbl:"Cadence"}],"Plus longue sortie du cycle. FC très maîtrisée malgré la distance — bon signe après l'allègement de samedi.",false,"🌦️ pluie légère, ~22°C (historique)")
 ]},
 
-{num:"S8", dates:"2026 Août 10 au 16", title:"Allégée", vol:"46 km prévus", volReal:"~29,3 km à ce jour", statusEmoji:"🟡", statusText:"seuil décalé au samedi, terrain non plat", open:true, sessions:[
+{num:"S8", dates:"2026 Août 10 au 16", start:"2026-08-10", title:"Allégée", vol:"46 km prévus", volReal:"~29,3 km à ce jour", statusEmoji:"🟡", statusText:"seuil décalé au samedi, terrain non plat", open:false, sessions:[
   s("Mardi 11/08","EF","🏃","ef","done","Réalisée","8,61 km",[seg("Endurance fondamentale",54,"6:15/km",EFG)],[{val:"140",lbl:"FC moy"},{val:"149",lbl:"FC max"},{val:"159,5",lbl:"Cadence"}],"Séance impeccable, FC max à seulement 149 — aucune dérive. Bon signe après l'alerte du 06/08.",false,"🌦️ pluie légère, ~23°C (historique)"),
   s("Sam 15/08","Seuil — 10,7 km dont ~20 min","⚡","seuil","warn","Réalisée · décalée","10,67 km",
     [seg("Échauffement",15,"6:03/km",G),seg("Seuil",20,"5:14/km",SEUILY),seg("Retour",27,"6:02/km",GL)],
@@ -299,7 +299,7 @@ const weeks = [
   s("Dim 16/08 (SL à recaler)","Sortie longue","🏔️","sl","warn","Non réalisée","20 km",[segR("Endurance fondamentale",120,134,"6:00-6:40/km",EFG)],[{val:"30-40g",lbl:"Glucides avant"},{val:"25-30g/h",lbl:"Pendant"}],"À recaler dans la semaine — semaine décalée d'un jour dans son ensemble.",false,"⛅ ~21°C, 20% pluie (estim.)")
 ]},
 
-{num:"S9", dates:"2026 Août 17 au 23", title:"Reprise de volume", vol:"60 km prévus", volReal:"12,69 km réalisés à ce jour", statusEmoji:"🟢", statusText:"excellent 4×1600m, reste de la semaine à venir", open:true, sessions:[
+{num:"S9", dates:"2026 Août 17 au 23", start:"2026-08-17", title:"Reprise de volume", vol:"60 km prévus", volReal:"12,69 km réalisés à ce jour", statusEmoji:"🟢", statusText:"excellent 4×1600m, reste de la semaine à venir", open:false, sessions:[
   s("Mar 18/08","4×1600m","⚡","seuil","done","Réalisée","12,69 km",
     [seg("Échauffement",18,"6:11/km",G),...repBlock(4,"1,6 km",32,"5:02-5:05/km",FRACC,15,G),seg("Retour",11,"7:04/km",GL)],
     [{val:"162-165",lbl:"Cadence"},{val:"166-186",lbl:"FC"}],
@@ -311,7 +311,7 @@ const weeks = [
   s("Dim 23/08","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",EFG)],[],"Nouveau record de distance du cycle.",false,"🍂 ~22°C (estim. saisonnière)")
 ]},
 
-{num:"S10", dates:"2026 Août 24 au 30", title:"Pic de volume", vol:"64 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+{num:"S10", dates:"2026 Août 24 au 30", start:"2026-08-24", title:"Pic de volume", vol:"64 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 25/08","5×1600m","⚡","seuil","todo","À venir","12 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"1,6 km",38,42,"4:50-5:10/km",FRACC,12,G),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
   s("Jeu 27/08","10 km allure marathon","🏃","ef","todo","À venir","14 km",
@@ -321,7 +321,7 @@ const weeks = [
   s("Dim 30/08","Sortie longue","🏔️","sl","todo","À venir","30 km",[segR("Endurance fondamentale",180,200,"6:00-6:40/km",EFG)],[],"Approche du pic de distance du cycle.",false,"🍂 ~24°C (estim. saisonnière)")
 ]},
 
-{num:"S11", dates:"2026 Août 31 au Septembre 6", title:"Pic du cycle", vol:"66 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+{num:"S11", dates:"2026 Août 31 au Septembre 6", start:"2026-08-31", title:"Pic du cycle", vol:"66 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 01/09","6×1 km","⚡","seuil","todo","À venir","12 km",
     [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(6,"1 km",29,31,"4:50-5:10/km",FRACC,13,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Jeu 03/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
@@ -332,7 +332,7 @@ const weeks = [
     "Plus longue sortie du cycle, avec un bloc à allure marathon inséré au milieu — simulation partielle des sensations de course.",false,"🍂 ~22°C (estim. saisonnière)")
 ]},
 
-{num:"S12", dates:"2026 Septembre 7 au 13", title:"Semaine de transition", vol:"58 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"58 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 08/09","5×1 km","⚡","seuil","todo","À venir","10 km",
     [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~20°C (estim. saisonnière)"),
   s("Jeu 10/09","8 km allure marathon","🏃","ef","todo","À venir","12 km",
@@ -341,7 +341,7 @@ const weeks = [
   s("Dim 13/09","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",EFG)],[],"Léger retrait de volume — début de la gestion vers l'affûtage.",false,"🍂 ~20°C (estim. saisonnière)")
 ]},
 
-{num:"S13", dates:"2026 Septembre 14 au 20", title:"Dernière semaine de charge", vol:"62 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 15/09","4×1 km","⚡","seuil","todo","À venir","10 km",
     [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~19°C (estim. saisonnière)"),
   s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
@@ -352,7 +352,7 @@ const weeks = [
     "Dernière très longue sortie avant l'affûtage — dernier gros test de l'allure marathon en fin de sortie longue.",false,"🍂 ~19°C (estim. saisonnière)")
 ]},
 
-{num:"S14", dates:"2026 Septembre 21 au 27", title:"Affûtage", vol:"48 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+{num:"S14", dates:"2026 Septembre 21 au 27", start:"2026-09-21", title:"Affûtage", vol:"48 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   s("Mar 22/09","5×800m","⚡","seuil","todo","À venir","8 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"800 m",19,21,"4:50-5:10/km",FRACC,6,G),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~17°C (estim. saisonnière)"),
   s("Jeu 24/09","6 km allure marathon","🏃","ef","todo","À venir","10 km",
@@ -361,7 +361,7 @@ const weeks = [
   s("Dim 27/09","Sortie longue","🏔️","sl","todo","À venir","22 km",[segR("Endurance fondamentale",131,147,"6:00-6:40/km",EFG)],[],"Le volume redescend nettement — début de l'affûtage.",false,"🍂 ~17°C (estim. saisonnière)")
 ]},
 
-{num:"S15", dates:"2026 Septembre 28 au Octobre 4", title:"Semaine marathon", vol:"léger — jour J dimanche", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
+{num:"S15", dates:"2026 Septembre 28 au Octobre 4", start:"2026-09-28", title:"Semaine marathon", vol:"léger — jour J dimanche", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
   rest("Lun 28/09","Repos","Prévu."),
   s("Mar 29/09","EF + 4 accélérations","🏃","ef","todo","À venir","6 km",[segR("Endurance fondamentale + strides",36,40,"6:00-6:40/km + 4×100m",EFG)],[],"Léger, juste pour garder les jambes réactives.",false,"🍂 ~14°C (estim. saisonnière)"),
   rest("Mer 30/09","Repos","Prévu."),
@@ -372,6 +372,15 @@ const weeks = [
 ]}
 
 ];
+
+const today = new Date();
+today.setHours(0,0,0,0);
+let currentWeekIdx = 0;
+weeks.forEach((w, i) => {
+  w.open = false;
+  if (new Date(w.start) <= today) currentWeekIdx = i;
+});
+weeks[currentWeekIdx].open = true;
 
 const container = document.getElementById('weeks');
 const allWeekEls = [];

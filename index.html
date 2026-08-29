@@ -312,13 +312,16 @@ const weeks = [
   s("Dim 23/08","Sortie longue","🏔️","sl","done","Réalisée","28,61 km",[seg("Endurance fondamentale",185,"6:29/km",EFG)],[{val:"152",lbl:"FC moy"},{val:"183",lbl:"FC max"},{val:"161",lbl:"Cadence"},{val:"101 m",lbl:"D+"}],"Nouveau record de distance du cycle, dépassé (28,61 vs 28 km), allure 6:29/km bien dans la cible 6:00-6:40/km sur 3h05 de course effective. Arrêt de 42 min à l'écluse (bateau qui passait) — n'entre pas dans le temps/l'allure retenus. FC et cadence stables sur toute la distance, rien à signaler.",false,"🍂 ~22°C (estim. saisonnière)")
 ]},
 
-{num:"S10", dates:"2026 Août 24 au 30", start:"2026-08-24", title:"Pic de volume", vol:"64 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
-  s("Mar 25/08","5×1600m","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"1,6 km",38,42,"4:50-5:10/km",FRACC,12,G),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
-  s("Jeu 27/08","10 km allure marathon","🏃","ef","todo","À venir","14 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
-    "Plus long bloc AM du cycle jusqu'ici.",false,"🍂 ~24°C (estim. saisonnière)"),
-  s("Sam 29/08","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~24°C (estim. saisonnière)"),
+{num:"S10", dates:"2026 Août 24 au 30", start:"2026-08-24", title:"Pic de volume", vol:"64 km prévus", volReal:"~46,4 km réalisés à ce jour", statusEmoji:"🟡", statusText:"bon allure marathon, mais EF du 29/08 bien plus long que prévu avant la sortie longue", open:false, sessions:[
+  s("Mar 25/08","5×1600m","⚡","seuil","done","Réalisée","12,12 km",
+    [seg("Échauffement",16,"6:26/km",G),...repBlock(5,"1,6 km",42,"5:11-5:19/km",FRACC,12,G),seg("Retour",5,"11:56/km",GL)],
+    [{val:"164-167",lbl:"Cadence"},{val:"161-165",lbl:"FC moy"},{val:"175",lbl:"FC max"}],
+    "5 répétitions légèrement au-dessus de la cible (5:11-5:19/km vs 4:50-5:10/km), mais rythme très régulier et récupérations pile à 3 min (12 min au total, comme prévu). FC modérée (161-165, max 175) — l'écart de rythme est probablement lié à la fatigue de la grosse semaine précédente (62,4 km, 104% du plan).",false,"🍂 ~24°C (estim. saisonnière)"),
+  s("Jeu 27/08","10 km allure marathon","🏃","ef","done","Réalisée","14,22 km",
+    [seg("Échauffement",13,"6:12/km",G),seg("Allure marathon",55,"5:30/km",T),seg("Retour",16,"7:26/km",GL)],
+    [{val:"163",lbl:"FC moy"},{val:"176",lbl:"FC max"},{val:"163",lbl:"Cadence"}],
+    "Plus long bloc AM du cycle jusqu'ici, tenu à 5:30/km — plus rapide que la cible 5:35-5:40/km, sur 55 min. FC 163 de moyenne (max 176), toujours confortable malgré l'allure plus rapide. Bonne progression après le retest du 21/08 (5:37/km).",false,"🍂 ~24°C (estim. saisonnière)"),
+  s("Sam 29/08","EF","🏃","ef","warn","Réalisée","20,02 km",[seg("Endurance fondamentale",152,"7:35/km",EFG)],[{val:"138",lbl:"FC moy"},{val:"161",lbl:"FC max"},{val:"158",lbl:"Cadence"},{val:"34 m",lbl:"D+"}],"Sortie beaucoup plus longue que prévu (20 km vs 8 km programmés) — 'à la cool', exploration de l'île du Seigneur à allure très facile (7:35/km, FC 138 de moyenne). Belle endurance de base, mais ça fait un gros week-end si la sortie longue de 30 km est maintenue dimanche (50 km sur 2 jours) — à surveiller.",true,"🍂 ~24°C (estim. saisonnière)"),
   s("Dim 30/08","Sortie longue","🏔️","sl","todo","À venir","30 km",[segR("Endurance fondamentale",180,200,"6:00-6:40/km",EFG)],[],"Approche du pic de distance du cycle.",false,"🍂 ~24°C (estim. saisonnière)")
 ]},
 

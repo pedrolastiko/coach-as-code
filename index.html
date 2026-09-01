@@ -101,8 +101,11 @@
   .stat-white{background:var(--surface);color:var(--ink);}
   .stat-white .ico{color:var(--ink);}
   .stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-top:10px;}
-  .stat-value{font-size:34px;font-weight:800;letter-spacing:-0.02em;line-height:1;margin-top:2px;}
+  .stat-value{font-size:34px;font-weight:800;letter-spacing:-0.02em;line-height:1.05;margin-top:2px;
+    white-space:nowrap;overflow-wrap:normal;}
   .stat-value .stat-unit{font-size:15px;font-weight:700;}
+  /* le cumul dépasse 3 chiffres + décimale : on rétrécit pour rester sur une ligne */
+  @media (max-width:420px){ .stat-value{font-size:29px;} .stat-value .stat-unit{font-size:13px;} }
   .stat-sub{font-size:12px;font-weight:600;opacity:.75;margin-top:2px;}
 
   /* ====== 4. Séance du jour ====== */
@@ -128,7 +131,7 @@
   .scard-badge .ico{width:22px;height:22px;}
   .scard-body{min-width:0;flex:1;}
   .scard-date{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px;}
-  .scard-title{font-size:15.5px;font-weight:700;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .scard-title{font-size:15px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;overflow-wrap:break-word;}
   .scard-bar{display:flex;width:100%;height:5px;border-radius:var(--r-pill);overflow:hidden;background:#eee;margin-top:8px;}
   .scard-bar .mseg{height:100%;}
   .scard-note{display:flex;align-items:flex-start;gap:5px;font-size:11.5px;font-weight:600;color:#8a5c06;margin-top:8px;line-height:1.4;}
@@ -159,11 +162,11 @@
   .week-head{display:flex;width:100%;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;user-select:none;gap:12px;border:none;background:none;text-align:left;color:inherit;min-height:44px;}
   .week-head:hover{background:#fafafc;}
   .wh-left{display:flex;align-items:center;gap:12px;min-width:0;}
-  .wh-num{font-size:11px;font-weight:800;color:var(--muted);width:44px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
+  .wh-num{font-size:11px;font-weight:800;color:var(--muted);width:34px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
   .wh-mid{min-width:0;}
-  .wh-title{font-weight:700;font-size:14.5px;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .wh-vol{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap;}
-  .wh-dates{font-size:10.5px;color:var(--muted);font-weight:600;white-space:nowrap;display:block;}
+  .wh-title{font-weight:700;font-size:14px;letter-spacing:-0.01em;overflow:hidden;text-overflow:ellipsis;display:block;}
+  .wh-vol{font-size:11.5px;color:var(--muted);font-weight:600;}
+  .wh-dates{font-size:10.5px;line-height:1.35;color:var(--muted);font-weight:600;display:block;}
   .meteo{font-size:12.5px;white-space:nowrap;color:var(--ink);}
   .meteo.past{color:var(--muted);}
   .wh-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
@@ -179,14 +182,12 @@
   .chevron{transition:transform .18s ease;flex-shrink:0;color:var(--muted);}
   .week.open > .week-head .chevron{transform:rotate(180deg);}
   .week-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-  .week.open > .week-body{max-height:4000px;}
+  .week.open > .week-body{max-height:9000px;}
 
   .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
   table{width:100%;border-collapse:collapse;}
-  thead th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fafafc;}
   tbody tr.row{cursor:pointer;border-bottom:1px solid var(--line);transition:background .15s ease;}
   tbody tr.row:hover{background:#fafafc;}
-  td{padding:13px 16px;vertical-align:middle;font-size:13.5px;}
   .icon-cell{display:flex;align-items:center;gap:10px;}
   .row-badge{width:32px;height:32px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .row-badge .ico{width:16px;height:16px;}
@@ -205,13 +206,17 @@
   tr.row.open .chev-cell{transform:rotate(180deg);}
   .detail-row td{padding:0;border-bottom:1px solid var(--line);}
   .detail-wrap{max-height:0;overflow:hidden;transition:max-height .28s ease;background:#fafafc;}
-  .detail-row.open .detail-wrap{max-height:420px;}
-  .detail-inner{padding:16px 18px 20px;}
-  .full-bar-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;margin-bottom:12px;width:0;min-width:100%;}
-  .full-bar{display:flex;width:100%;height:44px;}
-  .full-bar .seg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:2px 3px;min-width:0;overflow:hidden;}
-  .full-bar .seg .seg-label{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  .full-bar .seg .seg-detail{font-family:ui-monospace,"Courier New",monospace;font-size:8.5px;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  .detail-row.open .detail-wrap{max-height:1600px;}
+  .detail-inner{padding:14px 14px 18px;}
+  /* Barre de structure : toujours 100% de la largeur, jamais de scroll horizontal.
+     Le détail de chaque segment est lu dans .seg-list juste en dessous. */
+  .full-bar{display:flex;width:100%;height:26px;border-radius:8px;overflow:hidden;margin-bottom:10px;}
+  .full-bar .seg{min-width:2px;}
+  .seg-list{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:5px;}
+  .seg-list li{display:grid;grid-template-columns:8px 1fr auto;align-items:baseline;gap:8px;font-size:12px;}
+  .seg-dot{width:8px;height:8px;border-radius:3px;align-self:center;}
+  .seg-name{font-weight:700;color:var(--ink);min-width:0;line-height:1.3;overflow-wrap:break-word;}
+  .seg-meta{font-family:ui-monospace,"Courier New",monospace;font-size:11px;color:var(--muted);font-weight:600;text-align:right;white-space:nowrap;}
   .metrics-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
   .chip{background:var(--bg);border-radius:var(--r-pill);padding:4px 10px;font-size:11.5px;font-weight:600;display:flex;gap:5px;align-items:baseline;}
   .chip b{font-family:ui-monospace,"Courier New",monospace;font-size:12px;} .chip span{color:var(--muted);font-size:10px;}
@@ -219,6 +224,39 @@
   .comment.warn{border-left-color:var(--frac);}
   .rest-row td{color:var(--muted);font-size:13px;font-weight:600;font-style:normal;}
   footer{margin-top:20px;font-size:11.5px;color:var(--muted);text-align:center;font-weight:600;}
+
+  /* ====== Séances en pile de cartes (toutes tailles d'écran) ======
+     Référence iPhone 15 (393px). Le tableau à 6 colonnes ne tient ni sur mobile ni
+     dans la grille desktop (une carte de semaine y fait au plus ~430px), donc chaque
+     séance est disposée en grille : nom + distance, statut + météo, mini-barre.
+     Résultat : plus aucun défilement horizontal, semaine ou séance dépliée. ====== */
+  .table-scroll{overflow-x:visible;}
+  table, tbody{display:block;width:100%;}
+  thead{display:none;}
+  tbody tr.row{display:grid;grid-template-columns:1fr auto 16px;column-gap:8px;row-gap:7px;
+    align-items:center;padding:11px 14px;}
+  tbody tr.row > td{display:block;padding:0;border:none;font-size:12.5px;}
+  tr.row > td:nth-child(1){grid-column:1;grid-row:1;min-width:0;}        /* icône + nom */
+  tr.row > td:nth-child(3){grid-column:2;grid-row:1;text-align:right;}   /* distance */
+  tr.row > td:nth-child(6){grid-column:3;grid-row:1;text-align:right;}   /* chevron */
+  tr.row > td:nth-child(2){grid-column:1;grid-row:2;}                    /* statut */
+  tr.row > td:nth-child(4){grid-column:2/4;grid-row:2;text-align:right;} /* météo */
+  tr.row > td:nth-child(5){grid-column:1/-1;grid-row:3;}                 /* mini-barre */
+  tr.row.open > td:nth-child(5){display:none;}   /* doublon avec la barre du détail */
+  tr.detail-row{display:block;}
+  tr.detail-row > td{display:block;padding:0;}
+  .rest-row{display:block;}
+  .rest-row td{display:block;padding:10px 14px;font-size:12px;}
+  .icon-cell{gap:9px;}
+  .row-badge{width:30px;height:30px;}
+  .name-block .name{font-size:13px;line-height:1.25;}
+  .name-block .day{font-size:9.5px;}
+  .status{font-size:11px;padding:3px 8px 3px 6px;}
+  .distance{font-size:14px;white-space:nowrap;}
+  .meteo{font-size:11px;white-space:normal;}
+  .week-comment{font-size:12px;margin:0 14px 12px;}
+  .comment{font-size:12px;}
+  .chip{font-size:11px;padding:3px 9px;}
 
   /* ====== Responsive ≥640px ====== */
   @media (min-width:640px){
@@ -307,7 +345,7 @@
 </div>
 
 <nav class="bottom-nav" aria-label="Navigation principale">
-  <button class="nav-tab" type="button" data-target="sec-hero" aria-current="page">
+  <button class="nav-tab" type="button" data-target="sec-week" aria-current="page">
     <svg class="ico ico-nav" aria-hidden="true"><use href="#i-calendar-days"></use></svg><span>Semaine</span>
   </button>
   <button class="nav-tab" type="button" data-target="sec-plan">
@@ -540,6 +578,29 @@ function miniBarHTML(segments){
   return (segments||[]).map(sg => `<div class="mseg" style="flex:${sg.min};background:${sg.color};"></div>`).join('');
 }
 
+/* Regroupe les segments identiques (les répétitions d'un fractionné) pour que la liste
+   de détail tienne en quelques lignes : "5× 1,6 km" au lieu de cinq lignes séparées. */
+function groupSegments(segments){
+  const out = [], seen = new Map();
+  (segments||[]).forEach(sg => {
+    const key = [sg.label, sg.pace, sg.color].join('|');
+    if (seen.has(key)) {
+      const g = out[seen.get(key)];
+      g.count++; g.mins.push(sg.min);
+      if (g.range !== sg.range) g.range = null;   // durées annoncées différentes
+    } else {
+      seen.set(key, out.length);
+      out.push({ sg, count: 1, mins: [sg.min], range: sg.range });
+    }
+  });
+  return out.map(g => {
+    const lo = Math.min(...g.mins), hi = Math.max(...g.mins);
+    // les répétitions d'un même bloc peuvent différer d'une minute (reste de division) :
+    // on les regroupe quand même et on affiche la fourchette.
+    return { sg: g.sg, count: g.count, time: g.range || (lo === hi ? lo + ' min' : lo + '-' + hi + ' min') };
+  });
+}
+
 function sessionTypeMeta(sess){
   const labels = (sess.segments||[]).map(sg => sg.label);
   const hasSeuilLabel = labels.some(l => /^Seuil/.test(l));
@@ -730,10 +791,12 @@ weeks.forEach((w) => {
     detailRow.className = 'detail-row';
     detailRow.innerHTML = `
       <td colspan="6"><div class="detail-wrap"><div class="detail-inner">
-        <div class="full-bar-scroll"><div class="full-bar">${sess.segments.map(sg => `
-          <div class="seg" style="flex:${sg.min} 0 56px;background:${sg.color};">
-            <div class="seg-label">${sg.label}</div><div class="seg-detail">${sg.range || sg.min+' min'} · ${sg.pace}</div>
-          </div>`).join('')}</div></div>
+        <div class="full-bar" aria-hidden="true">${sess.segments.map(sg => `
+          <div class="seg" style="flex:${sg.min} 1 0;background:${sg.color};"></div>`).join('')}</div>
+        <ul class="seg-list">${groupSegments(sess.segments).map(g => `
+          <li><span class="seg-dot" style="background:${g.sg.color}"></span>
+            <span class="seg-name">${g.count > 1 ? g.count + '× ' : ''}${g.sg.label}</span>
+            <span class="seg-meta">${g.time} · ${g.sg.pace}</span></li>`).join('')}</ul>
         <div class="metrics-row">${sess.metrics.map(m => `<div class="chip"><b>${m.val}</b><span>${m.lbl}</span></div>`).join('')}</div>
         <div class="comment ${sess.warn ? 'warn' : ''}">${sess.comment}</div>
       </div></div></td>
@@ -895,24 +958,42 @@ navTabs.forEach(tab => {
   tab.addEventListener('click', () => {
     const target = document.getElementById(tab.dataset.target);
     if (target) target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+    setActiveTab(tab);   // retour visuel immédiat, sans attendre le scroll
   });
 });
 
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const tab = navTabs.find(t => t.dataset.target === entry.target.id);
-    if (tab) {
-      navTabs.forEach(t => t.removeAttribute('aria-current'));
-      tab.setAttribute('aria-current', 'page');
-    }
-  });
-}, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+/* Onglet actif = dernière section passée sous la ligne des 40% de l'écran.
+   Les sections sont triées par position réelle dans le document, qui ne suit pas
+   l'ordre des onglets (stats est au-dessus de la semaine et du plan). */
+const navSections = navTabs
+  .map(tab => ({ tab, target: document.getElementById(tab.dataset.target) }))
+  .filter(s => s.target)
+  .sort((a, b) => a.target.offsetTop - b.target.offsetTop);
 
-navTabs.forEach(tab => {
-  const target = document.getElementById(tab.dataset.target);
-  if (target) navObserver.observe(target);
-});
+function setActiveTab(tab){
+  navTabs.forEach(t => t.removeAttribute('aria-current'));
+  tab.setAttribute('aria-current', 'page');
+}
+
+function updateActiveTab(){
+  const line = window.innerHeight * 0.4;
+  let current = navSections[0];
+  navSections.forEach(s => { if (s.target.getBoundingClientRect().top <= line) current = s; });
+  // arrivé en bas de page, la dernière section est forcément celle qu'on regarde
+  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+    current = navSections[navSections.length - 1];
+  }
+  if (current) setActiveTab(current.tab);
+}
+
+let navTicking = false;
+window.addEventListener('scroll', () => {
+  if (navTicking) return;
+  navTicking = true;
+  requestAnimationFrame(() => { updateActiveTab(); navTicking = false; });
+}, { passive: true });
+window.addEventListener('resize', updateActiveTab);
+updateActiveTab();
 
 /* ---- Rendu initial ---- */
 

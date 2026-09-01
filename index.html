@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Coach-as-Code</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1b1b1f">
@@ -51,12 +51,14 @@
     --gutter:10px;
   }
   *{box-sizing:border-box;}
-  html{background:var(--bg);}
+  html{background:var(--bg);-webkit-text-size-adjust:100%;}
   body{
     margin:0;background:var(--bg);color:var(--ink);
     font-family:"Bricolage Grotesque",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
     font-weight:400;
-    padding:16px 16px 100px;
+    overflow-wrap:break-word;
+    padding:calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+            calc(104px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
   }
   .page{max-width:430px;margin:0 auto;}
   h1,h2{margin:0;}
@@ -87,7 +89,7 @@
   .hero{background:var(--ink);color:#fff;}
   .hero-label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#c8c8d0;}
   .hero-label .ico{color:#c8c8d0;}
-  .hero-count{font-size:72px;font-weight:800;letter-spacing:-0.02em;line-height:1;margin:10px 0 4px;}
+  .hero-count{font-size:clamp(56px,17vw,72px);font-weight:800;letter-spacing:-0.02em;line-height:1;margin:10px 0 4px;}
   .hero-count small{font-size:22px;font-weight:700;letter-spacing:0;margin-left:6px;color:#c8c8d0;}
   .hero-bar{height:8px;border-radius:var(--r-pill);background:rgba(255,255,255,.14);overflow:hidden;margin:14px 0 10px;}
   .hero-bar-fill{height:100%;background:var(--lime);border-radius:var(--r-pill);width:0%;transition:width .4s ease;}
@@ -101,8 +103,9 @@
   .stat-white{background:var(--surface);color:var(--ink);}
   .stat-white .ico{color:var(--ink);}
   .stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-top:10px;}
-  .stat-value{font-size:34px;font-weight:800;letter-spacing:-0.02em;line-height:1;margin-top:2px;}
-  .stat-value .stat-unit{font-size:15px;font-weight:700;}
+  .stat-value{font-size:clamp(25px,8vw,34px);font-weight:800;letter-spacing:-0.02em;line-height:1.05;margin-top:2px;}
+  .stat-value{white-space:nowrap;}
+  .stat-value .stat-unit{font-size:15px;font-weight:700;margin-left:2px;}
   .stat-sub{font-size:12px;font-weight:600;opacity:.75;margin-top:2px;}
 
   /* ====== 4. Séance du jour ====== */
@@ -122,13 +125,13 @@
   .today-note{font-size:12.5px;font-weight:600;line-height:1.5;opacity:.85;}
 
   /* ====== 5. Liste séances semaine courante (cartes) ====== */
-  .scard{background:var(--surface);border-radius:var(--r-card);padding:16px;display:flex;align-items:center;gap:13px;margin-bottom:var(--gutter);}
+  .scard{background:var(--surface);border-radius:var(--r-card);padding:14px;display:flex;align-items:flex-start;gap:12px;margin-bottom:var(--gutter);}
   .scard.deviant{border:1.5px solid var(--seuil);}
-  .scard-badge{width:46px;height:46px;border-radius:var(--r-badge);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .scard-badge .ico{width:22px;height:22px;}
+  .scard-badge{width:42px;height:42px;border-radius:var(--r-badge);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .scard-badge .ico{width:21px;height:21px;}
   .scard-body{min-width:0;flex:1;}
   .scard-date{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px;}
-  .scard-title{font-size:15.5px;font-weight:700;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .scard-title{font-size:15px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;}
   .scard-bar{display:flex;width:100%;height:5px;border-radius:var(--r-pill);overflow:hidden;background:#eee;margin-top:8px;}
   .scard-bar .mseg{height:100%;}
   .scard-note{display:flex;align-items:flex-start;gap:5px;font-size:11.5px;font-weight:600;color:#8a5c06;margin-top:8px;line-height:1.4;}
@@ -148,7 +151,7 @@
   .tint-rest{background:var(--pill-rest-bg);color:var(--pill-rest-ink);}
 
   /* ====== 6. Bottom nav ====== */
-  .bottom-nav{position:fixed;left:16px;right:16px;bottom:14px;max-width:398px;margin:0 auto;background:var(--surface);border-radius:var(--r-pill);padding:6px;display:flex;gap:4px;box-shadow:0 6px 24px rgba(27,27,31,.14);z-index:20;}
+  .bottom-nav{position:fixed;left:max(12px,env(safe-area-inset-left));right:max(12px,env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));max-width:398px;margin:0 auto;background:var(--surface);border-radius:var(--r-pill);padding:6px;display:flex;gap:4px;box-shadow:0 6px 24px rgba(27,27,31,.14);z-index:20;}
   .nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;border-radius:var(--r-pill);padding:8px 4px;min-height:48px;cursor:pointer;color:var(--muted);font-size:10.5px;font-weight:700;}
   .nav-tab .ico-nav{color:var(--muted);}
   .nav-tab[aria-current="page"]{background:var(--ink);color:#fff;}
@@ -156,76 +159,95 @@
 
   /* ====== 7. Accordéon (plan complet) ====== */
   .week{background:var(--surface);border-radius:var(--r-card);margin-bottom:var(--gutter);overflow:hidden;}
-  .week-head{display:flex;width:100%;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;user-select:none;gap:12px;border:none;background:none;text-align:left;color:inherit;min-height:44px;}
+  .week-head{display:flex;width:100%;align-items:flex-start;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;gap:10px;border:none;background:none;text-align:left;color:inherit;min-height:44px;}
   .week-head:hover{background:#fafafc;}
-  .wh-left{display:flex;align-items:center;gap:12px;min-width:0;}
-  .wh-num{font-size:11px;font-weight:800;color:var(--muted);width:44px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
-  .wh-mid{min-width:0;}
-  .wh-title{font-weight:700;font-size:14.5px;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .wh-vol{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap;}
-  .wh-dates{font-size:10.5px;color:var(--muted);font-weight:600;white-space:nowrap;display:block;}
-  .meteo{font-size:12.5px;white-space:nowrap;color:var(--ink);}
+  .wh-left{display:flex;align-items:flex-start;gap:10px;min-width:0;flex:1;}
+  .wh-num{font-size:11px;font-weight:800;color:var(--muted);flex:0 0 auto;text-transform:uppercase;letter-spacing:.06em;background:var(--bg);border-radius:8px;padding:4px 7px;margin-top:1px;}
+  .wh-mid{min-width:0;flex:1;}
+  .wh-title{font-weight:700;font-size:14.5px;letter-spacing:-0.01em;line-height:1.3;}
+  .wh-vol{font-size:11.5px;color:var(--muted);font-weight:600;}
+  .wh-dates{font-size:11px;color:var(--muted);font-weight:600;display:block;line-height:1.4;margin-top:2px;}
+  .meteo{font-size:12px;color:var(--ink);}
   .meteo.past{color:var(--muted);}
-  .wh-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .wh-right{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-top:2px;}
   .wsdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
   .wsdot.done{background:var(--status-done);}
   .wsdot.warn{background:var(--status-warn);}
   .wsdot.danger{background:var(--frac);}
   .wsdot.neutral{background:var(--status-neutral);}
-  .week-comment{font-size:12.5px;line-height:1.55;color:var(--ink);border-left:3px solid var(--ef);padding:2px 0 2px 11px;margin:0 18px 14px;font-weight:600;}
+  .week-comment{font-size:12.5px;line-height:1.55;color:var(--ink);border-left:3px solid var(--ef);padding:2px 0 2px 11px;margin:0 16px 14px;font-weight:600;}
   .week-comment.warn{border-left-color:var(--status-warn);}
   .week-comment.danger{border-left-color:var(--frac);}
   .week-comment.neutral{border-left-color:var(--status-neutral);}
   .chevron{transition:transform .18s ease;flex-shrink:0;color:var(--muted);}
   .week.open > .week-head .chevron{transform:rotate(180deg);}
-  .week-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-  .week.open > .week-body{max-height:4000px;}
 
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  table{width:100%;border-collapse:collapse;}
-  thead th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fafafc;}
-  tbody tr.row{cursor:pointer;border-bottom:1px solid var(--line);transition:background .15s ease;}
-  tbody tr.row:hover{background:#fafafc;}
-  td{padding:13px 16px;vertical-align:middle;font-size:13.5px;}
-  .icon-cell{display:flex;align-items:center;gap:10px;}
-  .row-badge{width:32px;height:32px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .row-badge .ico{width:16px;height:16px;}
-  .name-block .day{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:1px;font-weight:700;}
-  .name-block .name{font-weight:700;font-size:13.5px;}
-  .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px 3px 7px;border-radius:var(--r-pill);white-space:nowrap;}
-  .status .dot{width:6px;height:6px;border-radius:50%;}
+  /* Accordéons : grid 0fr→1fr, aucune hauteur max arbitraire (plus de contenu coupé) */
+  .collapse{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease;}
+  .collapse > .collapse-in{overflow:hidden;min-height:0;}
+  .week.open > .week-body{grid-template-rows:1fr;}
+  .srow-detail.open{grid-template-rows:1fr;}
+
+  /* ---- Liste verticale des séances (remplace le tableau à scroll horizontal) ---- */
+  .sessions{border-top:1px solid var(--line);}
+  .srow{border-bottom:1px solid var(--line);}
+  .srow:last-child{border-bottom:none;}
+  .srow-head{display:flex;align-items:flex-start;gap:11px;width:100%;padding:12px 16px;background:none;border:none;text-align:left;color:inherit;font:inherit;transition:background .15s ease;}
+  button.srow-head{cursor:pointer;}
+  button.srow-head:hover{background:#fafafc;}
+  .row-badge{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .row-badge .ico{width:17px;height:17px;}
+  .srow-main{min-width:0;flex:1;}
+  .srow-main .day{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:1px;font-weight:700;}
+  .srow-main .name{font-weight:700;font-size:13.5px;line-height:1.3;}
+  .srow-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 9px;margin-top:7px;}
+  .srow-main .mini-bar{margin-top:8px;}
+  .srow-rest .name{font-weight:600;color:var(--muted);}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:3px 9px 3px 7px;border-radius:var(--r-pill);white-space:nowrap;}
+  .status .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
   .status.done{color:var(--status-done-txt);background:var(--status-done-bg);} .status.done .dot{background:var(--status-done);}
   .status.todo{color:var(--status-todo-txt);background:var(--status-todo-bg);} .status.todo .dot{background:var(--status-todo);}
   .status.warn{color:var(--status-warn-txt);background:var(--status-warn-bg);} .status.warn .dot{background:var(--status-warn);}
   .status.neutral{color:var(--status-neutral-txt);background:var(--status-neutral-bg);} .status.neutral .dot{background:var(--status-neutral);}
-  .distance{font-weight:800;}
-  .mini-bar{display:flex;width:100%;min-width:100px;height:6px;border-radius:var(--r-pill);overflow:hidden;background:#eee;}
-  .mini-bar .mseg{height:100%;}
-  .chev-cell{color:var(--muted);display:inline-flex;transition:transform .18s ease;}
-  tr.row.open .chev-cell{transform:rotate(180deg);}
-  .detail-row td{padding:0;border-bottom:1px solid var(--line);}
-  .detail-wrap{max-height:0;overflow:hidden;transition:max-height .28s ease;background:#fafafc;}
-  .detail-row.open .detail-wrap{max-height:420px;}
-  .detail-inner{padding:16px 18px 20px;}
-  .full-bar-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;margin-bottom:12px;width:0;min-width:100%;}
-  .full-bar{display:flex;width:100%;height:44px;}
-  .full-bar .seg{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:2px 3px;min-width:0;overflow:hidden;}
-  .full-bar .seg .seg-label{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  .full-bar .seg .seg-detail{font-family:ui-monospace,"Courier New",monospace;font-size:8.5px;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-  .metrics-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .distance{font-weight:800;font-size:13px;white-space:nowrap;}
+  .mini-bar{display:flex;width:100%;height:6px;border-radius:var(--r-pill);overflow:hidden;background:#eee;}
+  .mini-bar .mseg{height:100%;min-width:1px;}
+  .chev-cell{color:var(--muted);display:inline-flex;transition:transform .18s ease;flex-shrink:0;margin-top:8px;}
+  .srow.open .chev-cell{transform:rotate(180deg);}
+  .srow-detail{background:#fafafc;}
+  .detail-inner{padding:14px 16px 18px;}
+
+  /* Barre de répartition : toujours à 100% de la largeur + légende lisible */
+  .full-bar{display:flex;width:100%;height:30px;border-radius:10px;overflow:hidden;margin-bottom:10px;}
+  .full-bar .seg{flex:var(--g,1) 1 0;min-width:2px;}
+  .seg-legend{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+  .seg-leg{display:flex;align-items:flex-start;gap:7px;font-size:11.5px;font-weight:600;line-height:1.4;}
+  .seg-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;margin-top:4px;}
+  .seg-leg b{font-weight:800;}
+  .seg-leg .sub{color:var(--muted);}
+  .metrics-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
   .chip{background:var(--bg);border-radius:var(--r-pill);padding:4px 10px;font-size:11.5px;font-weight:600;display:flex;gap:5px;align-items:baseline;}
   .chip b{font-family:ui-monospace,"Courier New",monospace;font-size:12px;} .chip span{color:var(--muted);font-size:10px;}
   .comment{font-size:12.5px;line-height:1.55;color:var(--ink);border-left:3px solid var(--ef);padding:2px 0 2px 11px;font-weight:600;}
   .comment.warn{border-left-color:var(--frac);}
-  .rest-row td{color:var(--muted);font-size:13px;font-weight:600;font-style:normal;}
   footer{margin-top:20px;font-size:11.5px;color:var(--muted);text-align:center;font-weight:600;}
+
+  /* ====== Petits écrans (<380px) ====== */
+  @media (max-width:379px){
+    body{padding-left:12px;padding-right:12px;}
+    .bento{padding:16px 14px;}
+    .stat{padding:15px;min-height:106px;}
+    .week-head,.srow-head{padding-left:13px;padding-right:13px;}
+    .detail-inner{padding:13px 13px 16px;}
+    .week-comment{margin-left:13px;margin-right:13px;}
+  }
 
   /* ====== Responsive ≥640px ====== */
   @media (min-width:640px){
     .page{max-width:1100px;}
     .stats-row{grid-template-columns:repeat(3,1fr);}
     .stat-white{grid-column:span 2;}
-    #weekSessionsList, #weeks{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gutter);align-content:start;}
+    #weekSessionsList, #weeks{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gutter);align-content:start;align-items:start;}
     #weekSessionsList .scard, #weeks .week{margin-bottom:0;}
   }
   @media (min-width:900px){
@@ -276,7 +298,7 @@
       <svg class="ico" aria-hidden="true"><use href="#i-trending-up"></use></svg>
       <div>
         <div class="stat-label">Cumul</div>
-        <div class="stat-value" id="statCumul">— km</div>
+        <div class="stat-value" id="statCumul">—<span class="stat-unit">km</span></div>
       </div>
     </div>
     <div class="stat stat-white">
@@ -540,6 +562,33 @@ function miniBarHTML(segments){
   return (segments||[]).map(sg => `<div class="mseg" style="flex:${sg.min};background:${sg.color};"></div>`).join('');
 }
 
+function escAttr(str){
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* Barre de répartition pleine largeur (aucun scroll horizontal) + légende dépliée :
+   les segments identiques consécutifs sont regroupés ("7× 400 m") pour rester lisible
+   même quand une séance compte 16 blocs. */
+function fullBarHTML(segments){
+  if (!segments || !segments.length) return '';
+  const bar = segments.map(sg =>
+    `<div class="seg" style="--g:${sg.min};background:${sg.color};" title="${escAttr(`${sg.label} · ${sg.range || sg.min+' min'} · ${sg.pace}`)}"></div>`
+  ).join('');
+
+  const groups = [];
+  segments.forEach(sg => {
+    const found = groups.find(g => g.label === sg.label && g.pace === sg.pace && g.color === sg.color);
+    if (found) { found.count++; found.min += sg.min; }
+    else groups.push({label:sg.label, pace:sg.pace, color:sg.color, count:1, min:sg.min});
+  });
+  const legend = groups.map(g =>
+    `<div class="seg-leg"><span class="seg-dot" style="background:${g.color};"></span>
+      <span><b>${g.count > 1 ? g.count + '× ' : ''}${g.label}</b> <span class="sub">· ${g.min} min · ${g.pace}</span></span></div>`
+  ).join('');
+
+  return `<div class="full-bar">${bar}</div><div class="seg-legend">${legend}</div>`;
+}
+
 function sessionTypeMeta(sess){
   const labels = (sess.segments||[]).map(sg => sg.label);
   const hasSeuilLabel = labels.some(l => /^Seuil/.test(l));
@@ -654,6 +703,8 @@ function scrollToWeekSession(sess){
   rec.weekEl.querySelector('.week-head').setAttribute('aria-expanded', 'true');
   rec.row.classList.add('open');
   rec.detailRow.classList.add('open');
+  const rowHead = rec.row.querySelector('.srow-head');
+  if (rowHead) rowHead.setAttribute('aria-expanded', 'true');
   rec.row.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
 }
 
@@ -675,21 +726,18 @@ weeks.forEach((w) => {
         <span class="wh-num">${w.num}</span>
         <div class="wh-mid">
           <span class="wh-title">${w.title}</span>
-          <span class="wh-dates">${w.dates} · ${volLine}</span>
+          <span class="wh-dates">${w.dates}<br>${volLine}</span>
         </div>
       </div>
       <div class="wh-right">
-        <span class="wsdot ${statusCls}" title="${w.statusText}"></span>
+        <span class="wsdot ${statusCls}" title="${escAttr(w.statusText)}"></span>
         ${iconSvg('chevron-down', 'ico-nav chevron')}
       </div>
     </button>
-    <div class="week-body">
-      <div class="week-comment ${statusCls}">${w.statusEmoji} ${w.statusText}</div>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th>Séance</th><th>Statut</th><th>Distance</th><th>Météo</th><th>Répartition</th><th></th></tr></thead>
-          <tbody class="wtbody"></tbody>
-        </table>
+    <div class="week-body collapse">
+      <div class="collapse-in">
+        <div class="week-comment ${statusCls}">${w.statusEmoji} ${w.statusText}</div>
+        <div class="sessions"></div>
       </div>
     </div>
   `;
@@ -700,55 +748,67 @@ weeks.forEach((w) => {
     head.setAttribute('aria-expanded', String(nowOpen));
   });
 
-  const tbody = weekEl.querySelector('.wtbody');
+  const list = weekEl.querySelector('.sessions');
 
   w.sessions.forEach((sess) => {
+    const row = document.createElement('div');
+    row.className = 'srow';
+
     if (sess.rest) {
-      const tr = document.createElement('tr');
-      tr.className = 'rest-row';
-      tr.innerHTML = `<td colspan="6">${sess.day} — ${sess.label}${sess.note ? ' · ' + sess.note : ''}</td>`;
-      tbody.appendChild(tr);
+      row.classList.add('srow-rest');
+      row.innerHTML = `
+        <div class="srow-head">
+          <div class="row-badge tint-rest">${iconSvg('moon')}</div>
+          <div class="srow-main">
+            <div class="day">${sess.day}</div>
+            <div class="name">${sess.label}${sess.note ? ' · ' + sess.note : ''}</div>
+          </div>
+        </div>
+      `;
+      list.appendChild(row);
       return;
     }
 
     const meta = sessionTypeMeta(sess);
-    const row = document.createElement('tr');
-    row.className = 'row';
-    row.tabIndex = 0;
-    row.setAttribute('role', 'button');
+    const metricsHTML = sess.metrics && sess.metrics.length
+      ? `<div class="metrics-row">${sess.metrics.map(m => `<div class="chip"><b>${m.val}</b><span>${m.lbl}</span></div>`).join('')}</div>`
+      : '';
+
     row.innerHTML = `
-      <td><div class="icon-cell"><div class="row-badge tint-${meta.tint}">${iconSvg(meta.icon)}</div>
-        <div class="name-block"><div class="day">${sess.day}</div><div class="name">${sess.name}</div></div></div></td>
-      <td><span class="status ${sess.status}"><span class="dot"></span>${sess.statusLabel}</span></td>
-      <td><span class="distance">${sess.distance}</span></td>
-      <td><span class="meteo ${sess.status==='done'?'past':''}">${sess.meteo||'—'}</span></td>
-      <td><div class="mini-bar">${miniBarHTML(sess.segments)}</div></td>
-      <td style="text-align:right;"><span class="chev-cell">${iconSvg('chevron-down', 'ico-sm')}</span></td>
+      <button class="srow-head" type="button" aria-expanded="false">
+        <div class="row-badge tint-${meta.tint}">${iconSvg(meta.icon)}</div>
+        <div class="srow-main">
+          <div class="day">${sess.day}</div>
+          <div class="name">${sess.name}</div>
+          <div class="srow-meta">
+            <span class="status ${sess.status}"><span class="dot"></span>${sess.statusLabel}</span>
+            <span class="distance">${sess.distance}</span>
+            <span class="meteo ${sess.status === 'done' ? 'past' : ''}">${sess.meteo || ''}</span>
+          </div>
+          ${sess.segments && sess.segments.length ? `<div class="mini-bar">${miniBarHTML(sess.segments)}</div>` : ''}
+        </div>
+        <span class="chev-cell">${iconSvg('chevron-down', 'ico-sm')}</span>
+      </button>
+      <div class="srow-detail collapse">
+        <div class="collapse-in"><div class="detail-inner">
+          ${fullBarHTML(sess.segments)}
+          ${metricsHTML}
+          <div class="comment ${sess.warn ? 'warn' : ''}">${sess.comment}</div>
+        </div></div>
+      </div>
     `;
 
-    const detailRow = document.createElement('tr');
-    detailRow.className = 'detail-row';
-    detailRow.innerHTML = `
-      <td colspan="6"><div class="detail-wrap"><div class="detail-inner">
-        <div class="full-bar-scroll"><div class="full-bar">${sess.segments.map(sg => `
-          <div class="seg" style="flex:${sg.min} 0 56px;background:${sg.color};">
-            <div class="seg-label">${sg.label}</div><div class="seg-detail">${sg.range || sg.min+' min'} · ${sg.pace}</div>
-          </div>`).join('')}</div></div>
-        <div class="metrics-row">${sess.metrics.map(m => `<div class="chip"><b>${m.val}</b><span>${m.lbl}</span></div>`).join('')}</div>
-        <div class="comment ${sess.warn ? 'warn' : ''}">${sess.comment}</div>
-      </div></div></td>
-    `;
+    const head2 = row.querySelector('.srow-head');
+    const detailRow = row.querySelector('.srow-detail');
 
-    const toggleRow = () => {
-      const isOpen = row.classList.contains('open');
-      row.classList.toggle('open', !isOpen);
-      detailRow.classList.toggle('open', !isOpen);
-    };
-    row.addEventListener('click', toggleRow);
-    row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRow(); } });
+    head2.addEventListener('click', () => {
+      const nowOpen = !row.classList.contains('open');
+      row.classList.toggle('open', nowOpen);
+      detailRow.classList.toggle('open', nowOpen);
+      head2.setAttribute('aria-expanded', String(nowOpen));
+    });
 
-    tbody.appendChild(row);
-    tbody.appendChild(detailRow);
+    list.appendChild(row);
     sessionRowMap.set(sess, { weekEl, row, detailRow });
   });
 
@@ -784,7 +844,8 @@ function renderHero(){
   const prog = getNumberedProgress();
   document.getElementById('heroWeek').textContent = `Semaine ${prog.current} / ${prog.total}`;
 
-  document.getElementById('statCumul').textContent = computeCumulKm().toFixed(1).replace('.', ',') + ' km';
+  document.getElementById('statCumul').innerHTML =
+    computeCumulKm().toFixed(1).replace('.', ',') + '<span class="stat-unit">km</span>';
 }
 
 /* ---- 4. Séance du jour ---- */

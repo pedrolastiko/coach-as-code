@@ -345,14 +345,15 @@
 </div>
 
 <nav class="bottom-nav" aria-label="Navigation principale">
-  <button class="nav-tab" type="button" data-target="sec-week" aria-current="page">
+  <!-- Ordre des onglets = ordre des sections dans la page : haut, milieu, bas. -->
+  <button class="nav-tab" type="button" data-target="sec-hero" aria-current="page">
+    <svg class="ico ico-nav" aria-hidden="true"><use href="#i-bar-chart-3"></use></svg><span>Stats</span>
+  </button>
+  <button class="nav-tab" type="button" data-target="sec-week">
     <svg class="ico ico-nav" aria-hidden="true"><use href="#i-calendar-days"></use></svg><span>Semaine</span>
   </button>
   <button class="nav-tab" type="button" data-target="sec-plan">
     <svg class="ico ico-nav" aria-hidden="true"><use href="#i-route"></use></svg><span>Plan</span>
-  </button>
-  <button class="nav-tab" type="button" data-target="sec-stats">
-    <svg class="ico ico-nav" aria-hidden="true"><use href="#i-bar-chart-3"></use></svg><span>Stats</span>
   </button>
 </nav>
 

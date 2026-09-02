@@ -510,9 +510,14 @@ const weeks = [
   s("Dim 30/08","Sortie longue","🏔️","sl","warn","Non réalisée","30 km",[segR("Endurance fondamentale",180,200,"6:00-6:40/km",EFG)],[],"Annulée volontairement : repos après un rhume et après les 20 km de la veille. Choix raisonnable — enchaîner 30 km sur des jambes déjà chargées et un organisme en récupération aurait coûté plus qu'il n'aurait rapporté.",true,"🍂 ~24°C (estim. saisonnière)")
 ]},
 
-{num:"S11", dates:"2026 Août 31 au Septembre 6", start:"2026-08-31", title:"Pic du cycle", vol:"66 km prévus", statusEmoji:"⚪", statusText:"à venir", open:false, sessions:[
-  s("Mar 01/09","6×1 km","⚡","seuil","todo","À venir","12 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(6,"1 km",29,31,"4:50-5:10/km",FRACC,13,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+{num:"S11", dates:"2026 Août 31 au Septembre 6", start:"2026-08-31", title:"Pic du cycle", vol:"66 km prévus", volReal:"10,24 km réalisés à ce jour", statusEmoji:"🟢", statusText:"6×1 km au bas de la fourchette cible, meilleure séance de seuil du cycle", open:false, sessions:[
+  s("Mar 01/09","6×1 km","⚡","seuil","done","Réalisée","10,24 km",
+    [seg("Échauffement",13,"6:17/km",G),
+     ...repBlock(5,"1 km",25,"4:50-4:56/km",FRACC,15,G),
+     seg("1 km",5,"4:50-4:56/km",FRACC),
+     seg("Retour",1,"12:09/km",GL)],
+    [{val:"163-166",lbl:"Cadence"},{val:"164-174",lbl:"FC moy"},{val:"183",lbl:"FC max"}],
+    "Excellente séance : les 6 répétitions à 4:50-4:56/km, soit le bas de la fourchette cible 4:50-5:10/km — net progrès sur les 5×1600m du 25/08 (5:11-5:19/km), signe que le repos du week-end a payé. Récupérations à 3:00 pile (5 entre les 6 répétitions). FC de 164 à 174 de moyenne selon les répétitions, max 183, cadence 163-166 spm. Seul écart : retour au calme quasi supprimé (1 min au lieu des 16-18 prévues), d'où 10,24 km au lieu des 12 km programmés.",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Jeu 03/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Sam 05/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),

@@ -511,7 +511,7 @@ const weeks = [
   s("Dim 30/08","Sortie longue","🏔️","sl","warn","Non réalisée","30 km",[segR("Endurance fondamentale",180,200,"6:00-6:40/km",EFG)],[],"Annulée volontairement : repos après un rhume et après les 20 km de la veille. Choix raisonnable — enchaîner 30 km sur des jambes déjà chargées et un organisme en récupération aurait coûté plus qu'il n'aurait rapporté.",true,"🍂 ~24°C (estim. saisonnière)")
 ]},
 
-{num:"S11", dates:"2026 Août 31 au Septembre 6", start:"2026-08-31", title:"Pic du cycle", vol:"66 km prévus", volReal:"10,24 km réalisés à ce jour", statusEmoji:"🟢", statusText:"6×1 km au bas de la fourchette cible, meilleure séance de seuil du cycle", open:false, sessions:[
+{num:"S11", dates:"2026 Août 31 au Septembre 6", start:"2026-08-31", title:"Pic du cycle", vol:"66 km prévus", volReal:"~24,3 km réalisés à ce jour", statusEmoji:"🟢", statusText:"6×1 km et bloc allure marathon tous deux plus rapides que la cible", open:false, sessions:[
   s("Mar 01/09","6×1 km","⚡","seuil","done","Réalisée","10,24 km",
     [seg("Échauffement",13,"6:17/km",G),
      ...repBlock(5,"1 km",25,"4:50-4:56/km",FRACC,15,G),
@@ -519,8 +519,10 @@ const weeks = [
      seg("Retour",1,"12:09/km",GL)],
     [{val:"163-166",lbl:"Cadence"},{val:"164-174",lbl:"FC moy"},{val:"183",lbl:"FC max"}],
     "Excellente séance : les 6 répétitions à 4:50-4:56/km, soit le bas de la fourchette cible 4:50-5:10/km — net progrès sur les 5×1600m du 25/08 (5:11-5:19/km), signe que le repos du week-end a payé. Récupérations à 3:00 pile (5 entre les 6 répétitions). FC de 164 à 174 de moyenne selon les répétitions, max 183, cadence 163-166 spm. Seul écart : retour au calme quasi supprimé (1 min au lieu des 16-18 prévues), d'où 10,24 km au lieu des 12 km programmés.",false,"🍂 ~22°C (estim. saisonnière)"),
-  s("Jeu 03/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
+  s("Jeu 03/09","10 km allure marathon","🏃","ef","done","Réalisée","14,05 km",
+    [seg("Échauffement",14,"6:40/km",G),seg("Allure marathon",55,"5:29/km",T),seg("Retour",14,"7:28/km",GL)],
+    [{val:"168",lbl:"FC moy"},{val:"178",lbl:"FC max"},{val:"163",lbl:"Cadence"}],
+    "Bloc de 10,08 km tenu à 5:29/km sur 55 min — plus rapide que la cible 5:35-5:40/km, et pile sur ton objectif annoncé de 5:30. Même allure que le bloc du 27/08 (5:30/km) mais FC moyenne à 168 contre 163 : +5 bpm pour le même travail, cohérent avec la fatigue résiduelle du 6×1 km rapide de mardi. Max à 178, rien d'inquiétant.",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Sam 05/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"🍂 ~22°C (estim. saisonnière)"),
   s("Dim 06/09","32 km (10 EF + 12 AM + 10 EF)","🏔️","sl","todo","À venir","32 km",
     [segR("EF",59,67,"6:00-6:40/km",EFG),segR("Allure marathon",66,68,"5:35-5:40/km",T),segR("EF",59,67,"6:00-6:40/km",EFG)],[],

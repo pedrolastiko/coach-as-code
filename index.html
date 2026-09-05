@@ -232,6 +232,25 @@
   .comment.warn{border-left-color:var(--frac);}
   footer{margin-top:20px;font-size:11.5px;color:var(--muted);text-align:center;font-weight:600;}
 
+  /* ====== 8. Table des allures ====== */
+  .pace-picker{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .pace-chip{border:none;font-family:inherit;font-size:11.5px;font-weight:700;padding:8px 12px;border-radius:var(--r-pill);
+    cursor:pointer;background:var(--surface);color:var(--ink);min-height:34px;}
+  .pace-chip[aria-pressed="true"]{background:var(--ink);color:#fff;}
+  .pace-chip[disabled]{opacity:.42;cursor:not-allowed;}
+  .pace-hint{font-size:11px;font-weight:600;color:var(--muted);margin:0 2px 10px;line-height:1.4;}
+  .pace-card{background:var(--surface);border-radius:var(--r-card);overflow:hidden;}
+  .pace-scroll{max-height:70vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+  .pace-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;table-layout:fixed;}
+  .pace-table th{position:sticky;top:0;z-index:2;background:#fafafc;font-size:9px;font-weight:800;text-transform:uppercase;
+    letter-spacing:.04em;color:var(--muted);padding:10px 4px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;}
+  .pace-table th:first-child{text-align:left;padding-left:14px;}
+  .pace-table td{padding:9px 5px;font-size:13px;font-weight:700;text-align:right;border-bottom:1px solid #f2f2f5;}
+  .pace-table td:first-child{text-align:left;padding-left:14px;font-size:12px;font-weight:800;color:var(--muted);}
+  .pace-table tr:last-child td{border-bottom:none;}
+  .pace-table tbody tr:nth-child(12n+1) td{border-top:1px solid var(--line);}
+  .pace-table tbody tr:first-child td{border-top:none;}
+
   /* ====== Petits écrans (<380px) ====== */
   @media (max-width:379px){
     body{padding-left:12px;padding-right:12px;}
@@ -240,6 +259,9 @@
     .week-head,.srow-head{padding-left:13px;padding-right:13px;}
     .detail-inner{padding:13px 13px 16px;}
     .week-comment{margin-left:13px;margin-right:13px;}
+    .pace-table td{font-size:12.5px;padding-left:3px;padding-right:3px;}
+    .pace-table th{padding-left:3px;padding-right:3px;}
+    .pace-table th:first-child,.pace-table td:first-child{padding-left:11px;}
   }
 
   /* ====== Responsive ≥640px ====== */
@@ -326,6 +348,21 @@
     <div id="weeks"></div>
     <footer>Touche une semaine pour la déplier, puis une séance pour voir le détail. Durées estimées à partir des allures cibles.</footer>
   </section>
+
+  <section id="sec-allures">
+    <h2 class="section-title">Allures</h2>
+    <div class="pace-picker" id="pacePicker" role="group" aria-label="Distances affichées"></div>
+    <p class="pace-hint" id="paceHint"></p>
+    <div class="pace-card">
+      <div class="pace-scroll">
+        <table class="pace-table">
+          <thead id="paceHead"></thead>
+          <tbody id="paceBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <footer>Temps théoriques à allure constante, de 4:00 à 8:00 par pas de 5 s. Choisis jusqu'à 4 distances.</footer>
+  </section>
 </div>
 
 <nav class="bottom-nav" aria-label="Navigation principale">
@@ -337,6 +374,9 @@
   </button>
   <button class="nav-tab" type="button" data-target="sec-stats">
     <svg class="ico ico-nav" aria-hidden="true"><use href="#i-bar-chart-3"></use></svg><span>Stats</span>
+  </button>
+  <button class="nav-tab" type="button" data-target="sec-allures">
+    <svg class="ico ico-nav" aria-hidden="true"><use href="#i-timer"></use></svg><span>Allures</span>
   </button>
 </nav>
 
@@ -947,6 +987,87 @@ function renderWeekSessionsList(){
   });
 }
 
+/* ---- 8. Table des allures ----
+   Table de référence neutre : aucune ligne n'est mise en avant. Les colonnes
+   sont choisies par l'utilisateur, 4 au maximum — au-delà les temps ne tiennent
+   plus dans la largeur d'un téléphone et l'écran se remettrait à glisser. */
+
+const PACE_DISTANCES = [
+  {key:'400',  label:'400 m',   km:0.4},
+  {key:'800',  label:'800 m',   km:0.8},
+  {key:'1000', label:'1 km',    km:1},
+  {key:'1600', label:'1 600 m', km:1.6},
+  {key:'3000', label:'3 km',    km:3},
+  {key:'5000', label:'5 km',    km:5},
+  {key:'10k',  label:'10 km',   km:10},
+  {key:'15k',  label:'15 km',   km:15},
+  {key:'20k',  label:'20 km',   km:20},
+  {key:'semi', label:'Semi',    km:21.0975},
+  {key:'30k',  label:'30 km',   km:30},
+  {key:'mar',  label:'Marathon',km:42.195}
+];
+const PACE_MAX_COLS = 4;
+const PACE_FROM = 240, PACE_TO = 480, PACE_STEP = 5; // 4:00 → 8:00 par pas de 5 s
+
+let paceCols = ['5000', '10k', 'semi', 'mar'];
+
+function paceLabel(sec){
+  return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+}
+
+function paceTime(sec){
+  const total = Math.round(sec);
+  const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60), s = total % 60;
+  const mm = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
+  return h ? `${h}:${mm}:${ss}` : `${m}:${ss}`;
+}
+
+function renderPaceTable(){
+  const picker = document.getElementById('pacePicker');
+  const full = paceCols.length >= PACE_MAX_COLS;
+
+  picker.innerHTML = PACE_DISTANCES.map(d => {
+    const on = paceCols.includes(d.key);
+    const lock = !on && full;
+    return `<button class="pace-chip" type="button" data-key="${d.key}" aria-pressed="${on}"${lock ? ' disabled' : ''}>${d.label}</button>`;
+  }).join('');
+
+  document.getElementById('paceHint').textContent = full
+    ? `${PACE_MAX_COLS} distances affichées — retires-en une pour en ajouter une autre.`
+    : `${paceCols.length} distance${paceCols.length > 1 ? 's' : ''} sur ${PACE_MAX_COLS}.`;
+
+  const cols = paceCols.map(k => PACE_DISTANCES.find(d => d.key === k));
+  // La colonne d'allure ne porte que « 5:41 » : on lui laisse le minimum
+  // pour que les temps longs (3:59:06) gardent de la place. En-tête « /km »
+  // plutôt que « Allure », qui ne tiendrait pas dans cette largeur.
+  const width = Math.max(15, Math.round(70 / (cols.length + 1)));
+
+  document.getElementById('paceHead').innerHTML =
+    `<tr><th style="width:${width}%">/km</th>` +
+    cols.map(c => `<th>${c.label}</th>`).join('') + '</tr>';
+
+  let rows = '';
+  for (let p = PACE_FROM; p <= PACE_TO; p += PACE_STEP) {
+    rows += `<tr><td>${paceLabel(p)}</td>` +
+            cols.map(c => `<td>${paceTime(p * c.km)}</td>`).join('') + '</tr>';
+  }
+  document.getElementById('paceBody').innerHTML = rows;
+}
+
+document.getElementById('pacePicker').addEventListener('click', (e) => {
+  const chip = e.target.closest('.pace-chip');
+  if (!chip || chip.disabled) return;
+  const key = chip.dataset.key;
+  if (paceCols.includes(key)) {
+    if (paceCols.length > 1) paceCols = paceCols.filter(k => k !== key);
+  } else if (paceCols.length < PACE_MAX_COLS) {
+    // On reprend l'ordre de PACE_DISTANCES pour que les colonnes restent
+    // toujours de la plus courte à la plus longue.
+    paceCols = PACE_DISTANCES.filter(d => paceCols.includes(d.key) || d.key === key).map(d => d.key);
+  }
+  renderPaceTable();
+});
+
 /* ---- 6. Nav basse : scroll vers section + onglet actif ---- */
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -980,6 +1101,7 @@ navTabs.forEach(tab => {
 renderHero();
 renderToday();
 renderWeekSessionsList();
+renderPaceTable();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Coach-as-Code</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1b1b1f">
@@ -51,12 +51,14 @@
     --gutter:10px;
   }
   *{box-sizing:border-box;}
-  html{background:var(--bg);}
+  html{background:var(--bg);-webkit-text-size-adjust:100%;}
   body{
     margin:0;background:var(--bg);color:var(--ink);
     font-family:"Bricolage Grotesque",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
     font-weight:400;
-    padding:16px 16px 100px;
+    overflow-wrap:break-word;
+    padding:calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+            calc(104px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
   }
   .page{max-width:430px;margin:0 auto;}
   h1,h2{margin:0;}
@@ -87,7 +89,7 @@
   .hero{background:var(--ink);color:#fff;}
   .hero-label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#c8c8d0;}
   .hero-label .ico{color:#c8c8d0;}
-  .hero-count{font-size:72px;font-weight:800;letter-spacing:-0.02em;line-height:1;margin:10px 0 4px;}
+  .hero-count{font-size:clamp(56px,17vw,72px);font-weight:800;letter-spacing:-0.02em;line-height:1;margin:10px 0 4px;}
   .hero-count small{font-size:22px;font-weight:700;letter-spacing:0;margin-left:6px;color:#c8c8d0;}
   .hero-bar{height:8px;border-radius:var(--r-pill);background:rgba(255,255,255,.14);overflow:hidden;margin:14px 0 10px;}
   .hero-bar-fill{height:100%;background:var(--lime);border-radius:var(--r-pill);width:0%;transition:width .4s ease;}
@@ -125,10 +127,10 @@
   .today-note{font-size:12.5px;font-weight:600;line-height:1.5;opacity:.85;}
 
   /* ====== 5. Liste séances semaine courante (cartes) ====== */
-  .scard{background:var(--surface);border-radius:var(--r-card);padding:16px;display:flex;align-items:center;gap:13px;margin-bottom:var(--gutter);}
+  .scard{background:var(--surface);border-radius:var(--r-card);padding:14px;display:flex;align-items:flex-start;gap:12px;margin-bottom:var(--gutter);}
   .scard.deviant{border:1.5px solid var(--seuil);}
-  .scard-badge{width:46px;height:46px;border-radius:var(--r-badge);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .scard-badge .ico{width:22px;height:22px;}
+  .scard-badge{width:42px;height:42px;border-radius:var(--r-badge);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .scard-badge .ico{width:21px;height:21px;}
   .scard-body{min-width:0;flex:1;}
   .scard-date{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px;}
   .scard-title{font-size:15px;font-weight:700;letter-spacing:-0.01em;line-height:1.25;overflow-wrap:break-word;}
@@ -151,7 +153,7 @@
   .tint-rest{background:var(--pill-rest-bg);color:var(--pill-rest-ink);}
 
   /* ====== 6. Bottom nav ====== */
-  .bottom-nav{position:fixed;left:16px;right:16px;bottom:14px;max-width:398px;margin:0 auto;background:var(--surface);border-radius:var(--r-pill);padding:6px;display:flex;gap:4px;box-shadow:0 6px 24px rgba(27,27,31,.14);z-index:20;}
+  .bottom-nav{position:fixed;left:max(12px,env(safe-area-inset-left));right:max(12px,env(safe-area-inset-right));bottom:calc(12px + env(safe-area-inset-bottom));max-width:398px;margin:0 auto;background:var(--surface);border-radius:var(--r-pill);padding:6px;display:flex;gap:4px;box-shadow:0 6px 24px rgba(27,27,31,.14);z-index:20;}
   .nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;border-radius:var(--r-pill);padding:8px 4px;min-height:48px;cursor:pointer;color:var(--muted);font-size:10.5px;font-weight:700;}
   .nav-tab .ico-nav{color:var(--muted);}
   .nav-tab[aria-current="page"]{background:var(--ink);color:#fff;}
@@ -159,7 +161,7 @@
 
   /* ====== 7. Accordéon (plan complet) ====== */
   .week{background:var(--surface);border-radius:var(--r-card);margin-bottom:var(--gutter);overflow:hidden;}
-  .week-head{display:flex;width:100%;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;user-select:none;gap:12px;border:none;background:none;text-align:left;color:inherit;min-height:44px;}
+  .week-head{display:flex;width:100%;align-items:flex-start;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;gap:10px;border:none;background:none;text-align:left;color:inherit;min-height:44px;}
   .week-head:hover{background:#fafafc;}
   .wh-left{display:flex;align-items:center;gap:12px;min-width:0;}
   .wh-num{font-size:11px;font-weight:800;color:var(--muted);width:34px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em;}
@@ -177,7 +179,7 @@
   .wsdot.warn{background:var(--status-warn);}
   .wsdot.danger{background:var(--frac);}
   .wsdot.neutral{background:var(--status-neutral);}
-  .week-comment{font-size:12.5px;line-height:1.55;color:var(--ink);border-left:3px solid var(--ef);padding:2px 0 2px 11px;margin:0 18px 14px;font-weight:600;}
+  .week-comment{font-size:12.5px;line-height:1.55;color:var(--ink);border-left:3px solid var(--ef);padding:2px 0 2px 11px;margin:0 16px 14px;font-weight:600;}
   .week-comment.warn{border-left-color:var(--status-warn);}
   .week-comment.danger{border-left-color:var(--frac);}
   .week-comment.neutral{border-left-color:var(--status-neutral);}
@@ -229,7 +231,6 @@
   .chip b{font-family:ui-monospace,"Courier New",monospace;font-size:12px;} .chip span{color:var(--muted);font-size:10px;}
   .comment{font-size:12.5px;line-height:1.55;color:var(--ink);border-left:3px solid var(--ef);padding:2px 0 2px 11px;font-weight:600;}
   .comment.warn{border-left-color:var(--frac);}
-  .rest-row td{color:var(--muted);font-size:13px;font-weight:600;font-style:normal;}
   footer{margin-top:20px;font-size:11.5px;color:var(--muted);text-align:center;font-weight:600;}
 
   /* ====== Séances en pile de cartes (toutes tailles d'écran) ======
@@ -270,7 +271,7 @@
     .page{max-width:1100px;}
     .stats-row{grid-template-columns:repeat(3,1fr);}
     .stat-white{grid-column:span 2;}
-    #weekSessionsList, #weeks{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gutter);align-content:start;}
+    #weekSessionsList, #weeks{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gutter);align-content:start;align-items:start;}
     #weekSessionsList .scard, #weeks .week{margin-bottom:0;}
   }
   @media (min-width:900px){
@@ -333,7 +334,7 @@
       <svg class="ico" aria-hidden="true"><use href="#i-trending-up"></use></svg>
       <div>
         <div class="stat-label">Cumul</div>
-        <div class="stat-value" id="statCumul">— km</div>
+        <div class="stat-value" id="statCumul">—<span class="stat-unit">km</span></div>
       </div>
     </div>
     <div class="stat stat-white">
@@ -360,6 +361,21 @@
     </div>
     <div id="weeks"></div>
     <footer>Touche une semaine pour la déplier, puis une séance pour voir le détail. Durées estimées à partir des allures cibles.</footer>
+  </section>
+
+  <section id="sec-allures">
+    <h2 class="section-title">Allures</h2>
+    <div class="pace-picker" id="pacePicker" role="group" aria-label="Distances affichées"></div>
+    <p class="pace-hint" id="paceHint"></p>
+    <div class="pace-card">
+      <div class="pace-scroll">
+        <table class="pace-table">
+          <thead id="paceHead"></thead>
+          <tbody id="paceBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <footer>Temps théoriques à allure constante, de 4:00 à 8:00 par pas de 5 s. Choisis jusqu'à 4 distances.</footer>
   </section>
 </div>
 
@@ -757,6 +773,8 @@ function scrollToWeekSession(sess){
   rec.weekEl.querySelector('.week-head').setAttribute('aria-expanded', 'true');
   rec.row.classList.add('open');
   rec.detailRow.classList.add('open');
+  const rowHead = rec.row.querySelector('.srow-head');
+  if (rowHead) rowHead.setAttribute('aria-expanded', 'true');
   rec.row.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
 }
 
@@ -778,11 +796,11 @@ weeks.forEach((w) => {
         <span class="wh-num">${w.num}</span>
         <div class="wh-mid">
           <span class="wh-title">${w.title}</span>
-          <span class="wh-dates">${w.dates} · ${volLine}</span>
+          <span class="wh-dates">${w.dates}<br>${volLine}</span>
         </div>
       </div>
       <div class="wh-right">
-        <span class="wsdot ${statusCls}" title="${w.statusText}"></span>
+        <span class="wsdot ${statusCls}" title="${escAttr(w.statusText)}"></span>
         ${iconSvg('chevron-down', 'ico-nav chevron')}
       </div>
     </button>
@@ -803,22 +821,32 @@ weeks.forEach((w) => {
     head.setAttribute('aria-expanded', String(nowOpen));
   });
 
-  const tbody = weekEl.querySelector('.wtbody');
+  const list = weekEl.querySelector('.sessions');
 
   w.sessions.forEach((sess) => {
+    const row = document.createElement('div');
+    row.className = 'srow';
+
     if (sess.rest) {
-      const tr = document.createElement('tr');
-      tr.className = 'rest-row';
-      tr.innerHTML = `<td colspan="6">${sess.day} — ${sess.label}${sess.note ? ' · ' + sess.note : ''}</td>`;
-      tbody.appendChild(tr);
+      row.classList.add('srow-rest');
+      row.innerHTML = `
+        <div class="srow-head">
+          <div class="row-badge tint-rest">${iconSvg('moon')}</div>
+          <div class="srow-main">
+            <div class="day">${sess.day}</div>
+            <div class="name">${sess.label}${sess.note ? ' · ' + sess.note : ''}</div>
+          </div>
+        </div>
+      `;
+      list.appendChild(row);
       return;
     }
 
     const meta = sessionTypeMeta(sess);
-    const row = document.createElement('tr');
-    row.className = 'row';
-    row.tabIndex = 0;
-    row.setAttribute('role', 'button');
+    const metricsHTML = sess.metrics && sess.metrics.length
+      ? `<div class="metrics-row">${sess.metrics.map(m => `<div class="chip"><b>${m.val}</b><span>${m.lbl}</span></div>`).join('')}</div>`
+      : '';
+
     row.innerHTML = `
       <td><div class="icon-cell"><div class="row-badge tint-${meta.tint}">${iconSvg(meta.icon)}</div>
         <div class="name-block"><div class="day">${sess.day}</div><div class="name">${sess.name}</div></div></div></td>
@@ -844,16 +872,14 @@ weeks.forEach((w) => {
       </div></div></td>
     `;
 
-    const toggleRow = () => {
-      const isOpen = row.classList.contains('open');
-      row.classList.toggle('open', !isOpen);
-      detailRow.classList.toggle('open', !isOpen);
-    };
-    row.addEventListener('click', toggleRow);
-    row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRow(); } });
+    head2.addEventListener('click', () => {
+      const nowOpen = !row.classList.contains('open');
+      row.classList.toggle('open', nowOpen);
+      detailRow.classList.toggle('open', nowOpen);
+      head2.setAttribute('aria-expanded', String(nowOpen));
+    });
 
-    tbody.appendChild(row);
-    tbody.appendChild(detailRow);
+    list.appendChild(row);
     sessionRowMap.set(sess, { weekEl, row, detailRow });
   });
 
@@ -889,7 +915,8 @@ function renderHero(){
   const prog = getNumberedProgress();
   document.getElementById('heroWeek').textContent = `Semaine ${prog.current} / ${prog.total}`;
 
-  document.getElementById('statCumul').textContent = computeCumulKm().toFixed(1).replace('.', ',') + ' km';
+  document.getElementById('statCumul').innerHTML =
+    computeCumulKm().toFixed(1).replace('.', ',') + '<span class="stat-unit">km</span>';
 }
 
 /* ---- 4. Séance du jour ---- */
@@ -991,6 +1018,87 @@ function renderWeekSessionsList(){
   });
 }
 
+/* ---- 8. Table des allures ----
+   Table de référence neutre : aucune ligne n'est mise en avant. Les colonnes
+   sont choisies par l'utilisateur, 4 au maximum — au-delà les temps ne tiennent
+   plus dans la largeur d'un téléphone et l'écran se remettrait à glisser. */
+
+const PACE_DISTANCES = [
+  {key:'400',  label:'400 m',   km:0.4},
+  {key:'800',  label:'800 m',   km:0.8},
+  {key:'1000', label:'1 km',    km:1},
+  {key:'1600', label:'1 600 m', km:1.6},
+  {key:'3000', label:'3 km',    km:3},
+  {key:'5000', label:'5 km',    km:5},
+  {key:'10k',  label:'10 km',   km:10},
+  {key:'15k',  label:'15 km',   km:15},
+  {key:'20k',  label:'20 km',   km:20},
+  {key:'semi', label:'Semi',    km:21.0975},
+  {key:'30k',  label:'30 km',   km:30},
+  {key:'mar',  label:'Marathon',km:42.195}
+];
+const PACE_MAX_COLS = 4;
+const PACE_FROM = 240, PACE_TO = 480, PACE_STEP = 5; // 4:00 → 8:00 par pas de 5 s
+
+let paceCols = ['5000', '10k', 'semi', 'mar'];
+
+function paceLabel(sec){
+  return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+}
+
+function paceTime(sec){
+  const total = Math.round(sec);
+  const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60), s = total % 60;
+  const mm = String(m).padStart(2, '0'), ss = String(s).padStart(2, '0');
+  return h ? `${h}:${mm}:${ss}` : `${m}:${ss}`;
+}
+
+function renderPaceTable(){
+  const picker = document.getElementById('pacePicker');
+  const full = paceCols.length >= PACE_MAX_COLS;
+
+  picker.innerHTML = PACE_DISTANCES.map(d => {
+    const on = paceCols.includes(d.key);
+    const lock = !on && full;
+    return `<button class="pace-chip" type="button" data-key="${d.key}" aria-pressed="${on}"${lock ? ' disabled' : ''}>${d.label}</button>`;
+  }).join('');
+
+  document.getElementById('paceHint').textContent = full
+    ? `${PACE_MAX_COLS} distances affichées — retires-en une pour en ajouter une autre.`
+    : `${paceCols.length} distance${paceCols.length > 1 ? 's' : ''} sur ${PACE_MAX_COLS}.`;
+
+  const cols = paceCols.map(k => PACE_DISTANCES.find(d => d.key === k));
+  // La colonne d'allure ne porte que « 5:41 » : on lui laisse le minimum
+  // pour que les temps longs (3:59:06) gardent de la place. En-tête « /km »
+  // plutôt que « Allure », qui ne tiendrait pas dans cette largeur.
+  const width = Math.max(15, Math.round(70 / (cols.length + 1)));
+
+  document.getElementById('paceHead').innerHTML =
+    `<tr><th style="width:${width}%">/km</th>` +
+    cols.map(c => `<th>${c.label}</th>`).join('') + '</tr>';
+
+  let rows = '';
+  for (let p = PACE_FROM; p <= PACE_TO; p += PACE_STEP) {
+    rows += `<tr><td>${paceLabel(p)}</td>` +
+            cols.map(c => `<td>${paceTime(p * c.km)}</td>`).join('') + '</tr>';
+  }
+  document.getElementById('paceBody').innerHTML = rows;
+}
+
+document.getElementById('pacePicker').addEventListener('click', (e) => {
+  const chip = e.target.closest('.pace-chip');
+  if (!chip || chip.disabled) return;
+  const key = chip.dataset.key;
+  if (paceCols.includes(key)) {
+    if (paceCols.length > 1) paceCols = paceCols.filter(k => k !== key);
+  } else if (paceCols.length < PACE_MAX_COLS) {
+    // On reprend l'ordre de PACE_DISTANCES pour que les colonnes restent
+    // toujours de la plus courte à la plus longue.
+    paceCols = PACE_DISTANCES.filter(d => paceCols.includes(d.key) || d.key === key).map(d => d.key);
+  }
+  renderPaceTable();
+});
+
 /* ---- 6. Nav basse : scroll vers section + onglet actif ---- */
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1042,6 +1150,7 @@ updateActiveTab();
 renderHero();
 renderToday();
 renderWeekSessionsList();
+renderPaceTable();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

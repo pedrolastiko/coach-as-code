@@ -315,6 +315,7 @@
   <symbol id="i-circle-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
   <symbol id="i-circle-dashed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/><path d="M13.9 21.818a10 10 0 0 1-3.8 0"/><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/><path d="M2.182 13.9a10 10 0 0 1 0-3.8"/><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/><path d="M21.818 10.1a10 10 0 0 1 0 3.8"/><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></symbol>
   <symbol id="i-flag-triangle-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V2.8a.8.8 0 0 1 1.17-.71l11.38 5.69a.8.8 0 0 1 0 1.44L6 15.5"/></symbol>
+  <symbol id="i-cloud-lightning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973"/><path d="m13 12-3 5h4l-3 5"/></symbol>
   <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
 </svg>
 
@@ -574,24 +575,24 @@ const weeks = [
     "30 km en 2h50:36 à 5:41/km, en remplacement des 32 km structurés. Semi passé en 1h57:58, puis ça se paie : premier 15 km en 1h23:35, second en 1h27:12. La FC monte de 158 à 179 bpm pendant que l'allure ralentit — tu termines en Z4. Le moteur tient 5:33/km à 165 bpm sur 15 km ; l'endurance ne suit pas encore au-delà de 25 km. Projection Riegel : 4h04. Le 3h55-3h59 reste jouable si tu pars à 5:38-5:40, pas à 5:33.",true,"leaf|~22°C (estim. saisonnière)")
 ]},
 
-{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"58 km prévus", status:"neutral", statusText:"à venir", open:false, sessions:[
+{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"58 km prévus", status:"neutral", statusText:"Semaine douce et humide (20-24°C) : orages jeudi soir, pluie et 24°C sur la sortie longue de dimanche", open:false, sessions:[
   s("Mar 08/09","5×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"leaf|~20°C (estim. saisonnière)"),
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"cloud-sun|~18°C le soir (max 22°/min 17°)"),
   s("Jeu 10/09","8 km allure marathon","🏃","ef","todo","À venir","12 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"leaf|~20°C (estim. saisonnière)"),
-  s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"leaf|~20°C (estim. saisonnière)"),
-  s("Dim 13/09","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",EFG)],[],"Léger retrait de volume — début de la gestion vers l'affûtage.",false,"leaf|~20°C (estim. saisonnière)")
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"Orages annoncés en soirée. Le bloc allure marathon est trop précieux pour être couru sous l'orage : si ça se confirme la veille, décale-le au mercredi ou au vendredi plutôt que de le raccourcir.",false,"cloud-lightning|Orages annoncés — ~18°C (max 22°/min 17°)"),
+  s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"cloud-sun|~19°C en matinée (max 23°/min 14°)"),
+  s("Dim 13/09","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",EFG)],[],"Léger retrait de volume — début de la gestion vers l'affûtage. Journée la plus chaude des deux semaines (24°C) et pluie annoncée : pars tôt, vers 7h, et ne cours pas après le chrono. À cette température compte 10 à 15 s/km de plus qu'à 15°C pour le même effort — c'est la FC qui commande, pas l'allure.",false,"cloud-rain|~19°C au départ, pluie — max 24°/min 17°")
 ]},
 
-{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", status:"neutral", statusText:"à venir", open:false, sessions:[
+{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", status:"neutral", statusText:"Net rafraîchissement (15-19°C) — conditions idéales pour la charge, et le 30 km de dimanche tombe pile sur la météo attendue le jour J", open:false, sessions:[
   s("Mar 15/09","4×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"leaf|~19°C (estim. saisonnière)"),
+    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"cloud-sun|~17°C le soir (max 19°/min 16°)"),
   s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"leaf|~19°C (estim. saisonnière)"),
-  s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"leaf|~19°C (estim. saisonnière)"),
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"sun|~14°C le soir (max 17°/min 12°)"),
+  s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"cloud|~14°C en matinée (max 16°/min 12°)"),
   s("Dim 20/09","30 km (15 EF + 10 AM + 5 EF)","🏔️","sl","todo","À venir","30 km",
     [segR("EF",90,100,"6:00-6:40/km",EFG),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("EF",30,34,"6:00-6:40/km",EFG)],[],
-    "Dernière très longue sortie avant l'affûtage — dernier gros test de l'allure marathon en fin de sortie longue.",false,"leaf|~19°C (estim. saisonnière)")
+    "Dernière très longue sortie avant l'affûtage — dernier gros test de l'allure marathon en fin de sortie longue. 15°C max, 10°C au départ, ciel dégagé : ce sont les conditions les plus proches de celles attendues le 4 octobre. C'est donc ta répétition générale — même heure de départ, même petit-déjeuner, même ravitaillement que le jour J.",false,"sun|~11°C au départ (max 15°/min 10°)")
 ]},
 
 {num:"S14", dates:"2026 Septembre 21 au 27", start:"2026-09-21", title:"Affûtage", vol:"48 km prévus", status:"neutral", statusText:"à venir", open:false, sessions:[

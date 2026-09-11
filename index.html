@@ -575,13 +575,18 @@ const weeks = [
     "30 km en 2h50:36 à 5:41/km, en remplacement des 32 km structurés. Semi passé en 1h57:58, puis ça se paie : premier 15 km en 1h23:35, second en 1h27:12. La FC monte de 158 à 179 bpm pendant que l'allure ralentit — tu termines en Z4. Le moteur tient 5:33/km à 165 bpm sur 15 km ; l'endurance ne suit pas encore au-delà de 25 km. Projection Riegel : 4h04. Le 3h55-3h59 reste jouable si tu pars à 5:38-5:40, pas à 5:33.",true,"leaf|~22°C (estim. saisonnière)")
 ]},
 
-{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"58 km prévus", status:"neutral", statusText:"Semaine douce et humide (20-24°C) : orages jeudi soir, pluie et 24°C sur la sortie longue de dimanche", open:false, sessions:[
-  s("Mar 08/09","5×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],"—",false,"cloud-sun|~18°C le soir (max 22°/min 17°)"),
-  s("Jeu 10/09","8 km allure marathon","🏃","ef","todo","À venir","12 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",44,46,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"Orages annoncés en soirée. Le bloc allure marathon est trop précieux pour être couru sous l'orage : si ça se confirme la veille, décale-le au mercredi ou au vendredi plutôt que de le raccourcir.",false,"cloud-lightning|Orages annoncés — ~18°C (max 22°/min 17°)"),
+{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"36 km réajustés (58 prévus)", volReal:"8 km réalisés à ce jour", status:"warn", statusText:"Semaine remaniée autour de la récupération du 30 km : seuil de mardi sauté, bloc allure marathon remplacé par une EF, sortie longue de dimanche ramenée à 20 km", open:false, sessions:[
+  s("Mar 08/09","5×1 km","⚡","seuil","warn","Non réalisée","10 km",
+    [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],
+    "Sautée volontairement : 48 h après les 30 km de Boucherville, une séance de seuil n'avait rien à apporter et beaucoup à coûter. Trois jours de repos complet à la place — c'est la bonne réponse à un effort relatif de 413.",true,"cloud-sun|~18°C le soir (max 22°/min 17°)"),
+  s("Jeu 10/09","EF de reprise","🏃","ef","warn","Réalisée · substituée","8,01 km",
+    [seg("Endurance fondamentale",51,"6:19/km",EFG)],
+    [{val:"135",lbl:"FC moy"},{val:"146",lbl:"FC max"},{val:"157",lbl:"Cadence"}],
+    "Remplace les 8 km à allure marathon, reportés après la course de dimanche. 8,01 km à 6:19/km pour 135 bpm de moyenne et 146 au maximum : bas de la Z2, exactement ce que doit être une reprise. Le signal est très bon — même allure que l'EF du 05/09 mais à une FC plus basse, quatre jours après 30 km courus à 5:41/km. Les orages annoncés n'ont pas gêné la séance.",true,"cloud-sun|~22°C le soir (capteur montre)"),
   s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"cloud-sun|~19°C en matinée (max 23°/min 14°)"),
-  s("Dim 13/09","Sortie longue","🏔️","sl","todo","À venir","28 km",[segR("Endurance fondamentale",167,187,"6:00-6:40/km",EFG)],[],"Léger retrait de volume — début de la gestion vers l'affûtage. Journée la plus chaude des deux semaines (24°C) et pluie annoncée : pars tôt, vers 7h, et ne cours pas après le chrono. À cette température compte 10 à 15 s/km de plus qu'à 15°C pour le même effort — c'est la FC qui commande, pas l'allure.",false,"cloud-rain|~19°C au départ, pluie — max 24°/min 17°")
+  s("Dim 13/09","Sortie longue allégée","🏔️","sl","todo","À venir","20 km",
+    [segR("Endurance fondamentale",120,134,"6:00-6:40/km",EFG)],[],
+    "Ramenée de 28 à 20 km. Sept jours après une course de 30 km à 5:41/km, avec trois jours de repos et une seule sortie facile depuis, 28 km te coûteraient plus qu'ils ne te rapporteraient — et il fera 24°C sous la pluie. La vraie séance clé est le 30 km du 20/09, par 15°C et ciel dégagé : cette sortie-ci est là pour la préparer, pas pour la concurrencer. Départ vers 7h, allure haute de la fourchette, la FC commande.",true,"cloud-rain|~19°C au départ, pluie — max 24°/min 17°")
 ]},
 
 {num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", status:"neutral", statusText:"Net rafraîchissement (15-19°C) — conditions idéales pour la charge, et le 30 km de dimanche tombe pile sur la météo attendue le jour J", open:false, sessions:[

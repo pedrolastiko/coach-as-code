@@ -575,7 +575,7 @@ const weeks = [
     "30 km en 2h50:36 à 5:41/km, en remplacement des 32 km structurés. Semi passé en 1h57:58, puis ça se paie : premier 15 km en 1h23:35, second en 1h27:12. La FC monte de 158 à 179 bpm pendant que l'allure ralentit — tu termines en Z4. Le moteur tient 5:33/km à 165 bpm sur 15 km ; l'endurance ne suit pas encore au-delà de 25 km. Projection Riegel : 4h04. Le 3h55-3h59 reste jouable si tu pars à 5:38-5:40, pas à 5:33.",true,"leaf|~22°C (estim. saisonnière)")
 ]},
 
-{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"36 km réajustés (58 prévus)", volReal:"8 km réalisés à ce jour", status:"warn", statusText:"Semaine remaniée autour de la récupération du 30 km : seuil de mardi sauté, bloc allure marathon remplacé par une EF, sortie longue de dimanche ramenée à 20 km", open:false, sessions:[
+{num:"S12", dates:"2026 Septembre 7 au 13", start:"2026-09-07", title:"Semaine de transition", vol:"36 km réajustés (58 prévus)", volReal:"16 km réalisés à ce jour", status:"warn", statusText:"Semaine remaniée autour de la récupération du 30 km : seuil de mardi sauté, bloc allure marathon remplacé par une EF, sortie longue de dimanche ramenée à 20 km. Reprise bien encaissée.", open:false, sessions:[
   s("Mar 08/09","5×1 km","⚡","seuil","warn","Non réalisée","10 km",
     [segR("Échauffement",16,18,"6:00-6:40/km",G),...repBlockR(5,"1 km",24,26,"4:50-5:10/km",FRACC,10,G),segR("Retour",13,15,"6:00-6:40/km",GL)],[],
     "Sautée volontairement : 48 h après les 30 km de Boucherville, une séance de seuil n'avait rien à apporter et beaucoup à coûter. Trois jours de repos complet à la place — c'est la bonne réponse à un effort relatif de 413.",true,"cloud-sun|~18°C le soir (max 22°/min 17°)"),
@@ -583,7 +583,10 @@ const weeks = [
     [seg("Endurance fondamentale",51,"6:19/km",EFG)],
     [{val:"135",lbl:"FC moy"},{val:"146",lbl:"FC max"},{val:"157",lbl:"Cadence"}],
     "Remplace les 8 km à allure marathon, reportés après la course de dimanche. 8,01 km à 6:19/km pour 135 bpm de moyenne et 146 au maximum : bas de la Z2, exactement ce que doit être une reprise. Le signal est très bon — même allure que l'EF du 05/09 mais à une FC plus basse, quatre jours après 30 km courus à 5:41/km. Les orages annoncés n'ont pas gêné la séance.",true,"cloud-sun|~22°C le soir (capteur montre)"),
-  s("Sam 12/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"cloud-sun|~19°C en matinée (max 23°/min 14°)"),
+  s("Sam 12/09","EF","🏃","ef","done","Réalisée","8,01 km",
+    [seg("Endurance fondamentale",49,"6:08/km",EFG)],
+    [{val:"153",lbl:"FC stable"},{val:"182",lbl:"FC max"},{val:"160",lbl:"Cadence"}],
+    "8,01 km à 6:08/km, dans la fourchette mais à son extrémité rapide, par une matinée chaude. Le décrochage de ceinture du 05/09 est revenu : les 2,6 premiers km affichent 160-182 bpm à 6:13/km, puis la FC retombe à 150-158 et y reste sur les 5,4 km suivants, courus au même rythme voire plus vite. La moyenne affichée de 157 et l'effort relatif de 80 sont donc gonflés — ta séance s'est réellement courue autour de 153 bpm. Humidifie les électrodes avant de partir, sinon la FC du premier tiers de chaque sortie restera inexploitable.",true,"sun|~24°C en matinée (capteur montre 27°)"),
   s("Dim 13/09","Sortie longue allégée","🏔️","sl","todo","À venir","20 km",
     [segR("Endurance fondamentale",120,134,"6:00-6:40/km",EFG)],[],
     "Ramenée de 28 à 20 km. Sept jours après une course de 30 km à 5:41/km, avec trois jours de repos et une seule sortie facile depuis, 28 km te coûteraient plus qu'ils ne te rapporteraient — et il fera 24°C sous la pluie. La vraie séance clé est le 30 km du 20/09, par 15°C et ciel dégagé : cette sortie-ci est là pour la préparer, pas pour la concurrencer. Départ vers 7h, allure haute de la fourchette, la FC commande.",true,"cloud-rain|~19°C au départ, pluie — max 24°/min 17°")

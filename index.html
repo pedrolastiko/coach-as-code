@@ -593,9 +593,14 @@ const weeks = [
     "21,18 km à 6:06/km — conforme aux 20 km réajustés. Deux bonnes nouvelles : la ceinture a tenu (aucun décrochage, FC exploitable de bout en bout), et l'allure n'a pas bougé — 6:05/km sur les 10 premiers km, 6:06/km sur les 11 suivants — pendant que la FC montait de 146 à 156. Dix bpm de dérive sur 21 km avec 24→30°C au capteur : normal et bien contenu, quand Boucherville t'avait coûté 21 bpm avec l'allure qui s'écroulait. Bémol : départ à 10h30 au lieu de 7h, donc plein dans la chaleur montante. Bondi 9 aux pieds (611 km au compteur) — bon choix pour le long, mais tranche maintenant la paire du 4 octobre.",false,"sun|24→30°C, chaleur montante (capteur montre)")
 ]},
 
-{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", status:"neutral", statusText:"Net rafraîchissement (15-19°C) — conditions idéales pour la charge, et le 30 km de dimanche tombe pile sur la météo attendue le jour J", open:false, sessions:[
-  s("Mar 15/09","4×1 km","⚡","seuil","todo","À venir","10 km",
-    [segR("Échauffement",19,23,"6:00-6:40/km",G),...repBlockR(4,"1 km",19,21,"4:50-5:10/km",FRACC,8,G),segR("Retour",16,18,"6:00-6:40/km",GL)],[],"—",false,"cloud-sun|~17°C le soir (max 19°/min 16°)"),
+{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", volReal:"10,15 km réalisés à ce jour", status:"done", statusText:"Net rafraîchissement (15-19°C), conditions idéales. Le 4×1 km ouvre fort : même allure qu'au 01/09 avec un tiers de récupération en moins. Le 30 km de dimanche tombe pile sur la météo attendue le jour J.", open:false, sessions:[
+  s("Mer 16/09","4×1 km","⚡","seuil","warn","Réalisée · décalée","10,15 km",
+    [seg("Échauffement",17,"6:09/km",G),
+     ...repBlock(3,"1 km",15,"4:49-4:50/km",FRACC,6,G),
+     seg("1 km",5,"4:49-4:50/km",FRACC),
+     seg("Retour",14,"6:41-7:16/km",GL)],
+    [{val:"4:49-4:50",lbl:"Allure reps"},{val:"2:00",lbl:"Récup"},{val:"160→176",lbl:"FC par rep"},{val:"180",lbl:"FC max"}],
+    "Quatre répétitions à 4:49-4:50/km : la borne basse de la cible 4:50-5:10, et une régularité au mètre près. Mais le vrai progrès est ailleurs — le 01/09 tu tenais 4:50-4:56 avec 3 min de récupération, ce soir c'est 4:49-4:50 avec seulement 2 min. Même travail, un tiers de repos en moins. La FC monte de 160 à 176 au fil des répétitions (max 180), signature normale d'une récup courte et non d'une dérive. Séance décalée du mardi au mercredi, sans conséquence.",false,"cloud-sun|~15°C le soir (max 18°/min 14°)"),
   s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
     [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"sun|~14°C le soir (max 17°/min 12°)"),
   s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"cloud|~14°C en matinée (max 16°/min 12°)"),

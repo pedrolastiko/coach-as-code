@@ -90,6 +90,7 @@
   .hero-label{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#c8c8d0;}
   .hero-label .ico{color:#c8c8d0;}
   .hero-count{font-size:clamp(56px,17vw,72px);font-weight:800;letter-spacing:-0.02em;line-height:1;margin:10px 0 4px;}
+  .hero-count-result{font-size:clamp(40px,12vw,56px);}
   .hero-count small{font-size:22px;font-weight:700;letter-spacing:0;margin-left:6px;color:#c8c8d0;}
   .hero-bar{height:8px;border-radius:var(--r-pill);background:rgba(255,255,255,.14);overflow:hidden;margin:14px 0 10px;}
   .hero-bar-fill{height:100%;background:var(--lime);border-radius:var(--r-pill);width:0%;transition:width .4s ease;}
@@ -326,8 +327,8 @@
   </header>
 
   <section class="hero bento" id="sec-hero">
-    <div class="hero-label"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-calendar-days"></use></svg>JOUR J · 04 OCT</div>
-    <div class="hero-count"><span id="heroDays">—</span><small>jours</small></div>
+    <div class="hero-label"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-calendar-days"></use></svg><span id="heroLabel">JOUR J · 04 OCT</span></div>
+    <div class="hero-count"><span id="heroDays">—</span><small id="heroUnit">jours</small></div>
     <div class="hero-bar"><div class="hero-bar-fill" id="heroBarFill"></div></div>
     <div class="hero-foot">
       <span id="heroWeek">Semaine — / 15</span>
@@ -593,7 +594,7 @@ const weeks = [
     "21,18 km à 6:06/km — conforme aux 20 km réajustés. Deux bonnes nouvelles : la ceinture a tenu (aucun décrochage, FC exploitable de bout en bout), et l'allure n'a pas bougé — 6:05/km sur les 10 premiers km, 6:06/km sur les 11 suivants — pendant que la FC montait de 146 à 156. Dix bpm de dérive sur 21 km avec 24→30°C au capteur : normal et bien contenu, quand Boucherville t'avait coûté 21 bpm avec l'allure qui s'écroulait. Bémol : départ à 10h30 au lieu de 7h, donc plein dans la chaleur montante. Bondi 9 aux pieds (611 km au compteur) — bon choix pour le long, mais tranche maintenant la paire du 4 octobre.",false,"sun|24→30°C, chaleur montante (capteur montre)")
 ]},
 
-{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", volReal:"10,15 km réalisés à ce jour", status:"done", statusText:"Net rafraîchissement (15-19°C), conditions idéales. Le 4×1 km ouvre fort : même allure qu'au 01/09 avec un tiers de récupération en moins. Le 30 km de dimanche tombe pile sur la météo attendue le jour J.", open:false, sessions:[
+{num:"S13", dates:"2026 Septembre 14 au 20", start:"2026-09-14", title:"Dernière semaine de charge", vol:"62 km prévus", volReal:"40,2 km réalisés", status:"warn", statusText:"Le 4×1 km ouvre fort (4:49/km avec un tiers de récupération en moins), mais les deux séances à allure marathon de la semaine disparaissent : jeudi non couru, et les 30 km de dimanche entièrement en EF. Aucun travail à allure course.", open:false, sessions:[
   s("Mer 16/09","4×1 km","⚡","seuil","warn","Réalisée · décalée","10,15 km",
     [seg("Échauffement",17,"6:09/km",G),
      ...repBlock(3,"1 km",15,"4:49-4:50/km",FRACC,6,G),
@@ -601,31 +602,53 @@ const weeks = [
      seg("Retour",14,"6:41-7:16/km",GL)],
     [{val:"4:49-4:50",lbl:"Allure reps"},{val:"2:00",lbl:"Récup"},{val:"160→176",lbl:"FC par rep"},{val:"180",lbl:"FC max"}],
     "Quatre répétitions à 4:49-4:50/km : la borne basse de la cible 4:50-5:10, et une régularité au mètre près. Mais le vrai progrès est ailleurs — le 01/09 tu tenais 4:50-4:56 avec 3 min de récupération, ce soir c'est 4:49-4:50 avec seulement 2 min. Même travail, un tiers de repos en moins. La FC monte de 160 à 176 au fil des répétitions (max 180), signature normale d'une récup courte et non d'une dérive. Séance décalée du mardi au mercredi, sans conséquence.",false,"cloud-sun|~15°C le soir (max 18°/min 14°)"),
-  s("Jeu 17/09","10 km allure marathon","🏃","ef","todo","À venir","14 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"sun|~14°C le soir (max 17°/min 12°)"),
-  s("Sam 19/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"cloud|~14°C en matinée (max 16°/min 12°)"),
-  s("Dim 20/09","30 km (15 EF + 10 AM + 5 EF)","🏔️","sl","todo","À venir","30 km",
-    [segR("EF",90,100,"6:00-6:40/km",EFG),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("EF",30,34,"6:00-6:40/km",EFG)],[],
-    "Dernière très longue sortie avant l'affûtage — dernier gros test de l'allure marathon en fin de sortie longue. 15°C max, 10°C au départ, ciel dégagé : ce sont les conditions les plus proches de celles attendues le 4 octobre. C'est donc ta répétition générale — même heure de départ, même petit-déjeuner, même ravitaillement que le jour J.",false,"sun|~11°C au départ (max 15°/min 10°)")
+  s("Jeu 17/09","10 km allure marathon","🏃","ef","warn","Non réalisée","14 km",
+    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",55,57,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],
+    "Non courue. C'était le dernier bloc long à allure marathon du cycle : avec la sortie longue de dimanche finalement courue entièrement en EF, le travail spécifique de la semaine disparaît presque complètement.",true,"sun|~14°C le soir (max 17°/min 12°)"),
+  s("Sam 19/09","EF","🏃","ef","warn","Non réalisée","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],
+    "Non courue — course de bateau-dragon le matin. Sans conséquence sur la préparation.",false,"cloud|~14°C en matinée (max 16°/min 12°)"),
+  s("Dim 20/09","30 km — tout en EF","🏔️","sl","warn","Réalisée · substituée","30,01 km",
+    [seg("Endurance fondamentale",191,"6:21/km",EFG)],
+    [{val:"3h11",lbl:"Temps"},{val:"153",lbl:"FC moy"},{val:"185",lbl:"FC max"},{val:"162",lbl:"Cadence"}],
+    "30,01 km bouclés à 6:21/km, mais entièrement en endurance fondamentale avec le chien : le bloc de 10 km à allure marathon prévu au milieu n'a pas été couru. La distance est là, le stimulus spécifique non. Associée au bloc du jeudi lui aussi sauté, cette semaine ne contient donc aucun travail à allure course — c'est le seul vrai trou de la préparation.",true,"sun|~11°C au départ (max 15°/min 10°)")
 ]},
 
-{num:"S14", dates:"2026 Septembre 21 au 27", start:"2026-09-21", title:"Affûtage", vol:"48 km prévus", status:"neutral", statusText:"à venir", open:false, sessions:[
-  s("Mar 22/09","5×800m","⚡","seuil","todo","À venir","8 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),...repBlockR(5,"800 m",19,21,"4:50-5:10/km",FRACC,6,G),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"leaf|~17°C (estim. saisonnière)"),
-  s("Jeu 24/09","6 km allure marathon","🏃","ef","todo","À venir","10 km",
-    [segR("Échauffement",13,15,"6:00-6:40/km",G),segR("Allure marathon",33,35,"5:35-5:40/km",T),segR("Retour",10,12,"6:00-6:40/km",GL)],[],"—",false,"leaf|~17°C (estim. saisonnière)"),
-  s("Sam 26/09","EF","🏃","ef","todo","À venir","8 km",[segR("Endurance fondamentale",48,54,"6:00-6:40/km",EFG)],[],"—",false,"leaf|~17°C (estim. saisonnière)"),
-  s("Dim 27/09","Sortie longue","🏔️","sl","todo","À venir","22 km",[segR("Endurance fondamentale",131,147,"6:00-6:40/km",EFG)],[],"Le volume redescend nettement — début de l'affûtage.",false,"leaf|~17°C (estim. saisonnière)")
+{num:"S14", dates:"2026 Septembre 21 au 27", start:"2026-09-21", title:"Affûtage", vol:"48 km prévus", volReal:"50,4 km réalisés", status:"done", statusText:"La meilleure semaine du cycle : 5×800m à 4:47-4:52, bloc de 5 km à 5:41/km, et surtout 15 km à 5:36/km le dimanche à FC 148. Tout était en place.", open:false, sessions:[
+  s("Mar 22/09","5×800m","⚡","seuil","done","Réalisée","11,57 km",
+    [seg("Échauffement",16,"5:52/km",G),
+     ...repBlock(4,"800 m",16,"4:47-4:52/km",FRACC,6,G),
+     seg("800 m",4,"4:47-4:52/km",FRACC),
+     seg("Retour",44,"6:17-6:40/km",GL)],
+    [{val:"4:47-4:52",lbl:"Allure reps"},{val:"1:30",lbl:"Récup"},{val:"146-160",lbl:"FC reps"},{val:"162",lbl:"Cadence"}],
+    "Cinq répétitions bouclées en 234-235 s chacune : 4:47 à 4:52/km, encore sous la cible 4:50-5:10, et une régularité remarquable à une seconde près sur les cinq. Récupérations courtes, 1:30. La vitesse est au rendez-vous — c'est la quatrième séance de qualité d'affilée au bas de la fourchette.",false,"leaf|~17°C (estim. saisonnière)"),
+  s("Jeu 24/09","5 km allure marathon","🏃","ef","done","Réalisée","10,41 km",
+    [seg("Échauffement",18,"6:10/km",G),seg("Allure marathon",28,"5:41/km",T),seg("Retour",16,"6:20/km",GL)],
+    [{val:"5:41/km",lbl:"Bloc AM"},{val:"145-160",lbl:"FC bloc"},{val:"173",lbl:"FC max"},{val:"161",lbl:"Cadence"}],
+    "Bloc de ~5 km tenu à 5:41/km, dans la cible 5:35-5:40 à une seconde près, FC entre 145 et 160. Exécution propre, sans dérive.",false,"leaf|~17°C (estim. saisonnière)"),
+  s("Sam 26/09","EF","🏃","ef","done","Réalisée","8,05 km",[seg("Endurance fondamentale",49,"6:04/km",EFG)],
+    [{val:"6:04/km",lbl:"Allure"},{val:"162",lbl:"Cadence"}],"EF de liaison, 8,05 km à 6:04/km. Rien à signaler.",false,"leaf|~17°C (estim. saisonnière)"),
+  s("Dim 27/09","20 km dont 15 à allure marathon","🏔️","sl","done","Réalisée","20,37 km",
+    [seg("EF",22,"6:05/km",EFG),seg("Allure marathon",84,"5:36/km",T),seg("EF",11,"6:12/km",EFG)],
+    [{val:"1h57",lbl:"Temps"},{val:"5:36/km",lbl:"Bloc AM"},{val:"148",lbl:"FC moy"},{val:"173",lbl:"FC max"}],
+    "La meilleure séance du cycle, et de loin : ~15 km tenus à 5:36/km pour une FC moyenne de 148 seulement. Tu transformes la sortie longue d'affûtage prévue en EF en un vrai bloc spécifique — et tu le réussis. Retiens ce chiffre : 5:36/km, 15 km, sans forcer. C'est l'allure que ton corps savait tenir à huit jours du départ.",false,"leaf|~17°C (estim. saisonnière)")
 ]},
 
-{num:"S15", dates:"2026 Septembre 28 au Octobre 4", start:"2026-09-28", title:"Semaine marathon", vol:"léger — jour J dimanche", status:"neutral", statusText:"à venir", open:false, sessions:[
+{num:"S15", dates:"2026 Septembre 28 au Octobre 4", start:"2026-09-28", title:"Semaine marathon", vol:"49,8 km réalisés, marathon compris", status:"warn", statusText:"Marathon bouclé en 4h10:47 (cible 3h55-3h59). Première moitié en 1h56:32 à 5:30/km, plus rapide que le meilleur bloc d'entraînement du cycle, puis 17:43 de perte sur la seconde. Un problème de gestion d'allure, pas de préparation.", open:false, sessions:[
   rest("Lun 28/09","Repos","Prévu."),
-  s("Mar 29/09","EF + 4 accélérations","🏃","ef","todo","À venir","6 km",[segR("Endurance fondamentale + strides",36,40,"6:00-6:40/km + 4×100m",EFG)],[],"Léger, juste pour garder les jambes réactives.",false,"leaf|~14°C (estim. saisonnière)"),
+  s("Mar 29/09","EF (affûtage)","🏃","ef","done","Réalisée","7,25 km",[seg("Endurance fondamentale",44,"6:02/km",EFG)],
+    [{val:"6:02/km",lbl:"Allure"},{val:"158",lbl:"Cadence"}],
+    "7,25 km à 6:02/km, effort relatif 13 : parfaitement dosé pour un mardi de semaine marathon.",false,"leaf|~14°C (estim. saisonnière)"),
   rest("Mer 30/09","Repos","Prévu."),
-  s("Jeu 01/10","EF très légère","🏃","ef","todo","À venir","5 km",[segR("Endurance fondamentale",30,34,"6:00-6:40/km",EFG)],[],"—",false,"leaf|~14°C (estim. saisonnière)"),
+  s("Jeu 01/10","EF très légère","🏃","ef","warn","Non réalisée","5 km",[segR("Endurance fondamentale",30,34,"6:00-6:40/km",EFG)],[],
+    "Non courue. Sans incidence : à trois jours du départ, une séance sautée ne coûte rien.",false,"leaf|~14°C (estim. saisonnière)"),
   rest("Ven 02/10","Repos","Prévu."),
-  s("Sam 03/10","Footing très léger","🏃","ef","todo","À venir","20 min",[seg("Footing d'activation",20,"très facile",EFG)],[],"Juste pour se sentir prêt, aucune fatigue à générer.",false,"leaf|~14°C (estim. saisonnière)"),
-  s("Dim 04/10","MARATHON","","race","todo","Jour J","42,195 km",[segR("Course",235,239,"5:41/km cible",T)],[{val:"3h55-3h59",lbl:"Objectif"},{val:"5:41/km",lbl:"Allure cible"}],"Le grand jour. 0-10km: 5:42-5:45/km · 10-30km: 5:38-5:40/km · 30-42km: selon sensations. Hydratation toutes les 20 min, gel toutes les 40 min.",false,"leaf|~14°C (estim. saisonnière)")
+  s("Sam 03/10","Footing très léger","🏃","ef","warn","Non réalisée","20 min",[seg("Footing d'activation",20,"très facile",EFG)],[],
+    "Non courue — repos complet la veille.",false,"leaf|~14°C (estim. saisonnière)"),
+  s("Dim 04/10","MARATHON DU P'TIT TRAIN DU NORD","","race","done","Réalisée","42,52 km",
+    [seg("km 0-10",58,"5:29/km",T),seg("km 10-21",59,"5:31/km",T),
+     seg("km 21-32",66,"6:01/km",T),seg("km 32-42",70,"6:46/km",T)],
+    [{val:"4h10:47",lbl:"Chrono"},{val:"1h56:32",lbl:"Semi"},{val:"5:57/km",lbl:"Allure moy"},{val:"164",lbl:"Cadence"}],
+    "4h10:47 pour une cible 3h55-3h59. Les quarts disent tout : 5:29 / 5:31 / 6:01 / 6:46 par km. Semi en 1h56:32, seconde moitié en 2h14:15 — 17:43 d'écart. Le diagnostic est net, et ce n'est pas la forme : tu as couru la première moitié à 5:30/km, l'allure d'un 3h52. Ton meilleur bloc du cycle, le 27/09, c'était 15 km à 5:36/km. Le jour J tu as tenu plus vite que ça, sur le double de la distance. Les crampes du 35e km sont la facture de ces 20 premiers kilomètres, et la chaleur a aggravé l'addition : 11°C au départ, 24-26°C au capteur en fin de parcours. Ce qui était bon, et qui reste vrai : la préparation. Le 4×1 km à 4:49 avec 2 min de récup, les 15 km à 5:36/km à FC 148, la dérive contenue à 10 bpm sur le 21 km du 13/09 — tout annonçait un 4h00-4h05 bien géré. Et tu as fini : les 500 derniers mètres à 5:36/km disent que la tête n'a pas lâché. À noter : la FC affichée (173 moy, 210 max) est inexploitable des km 7 à 12, où elle monte à 198-210 avant de retomber à 161 pendant que tu accélères — la ceinture a encore décroché, comme les 05/09, 12/09 et 22/09.",true,"sun|11°C au départ, 24-26°C au capteur en fin de course")
 ]}
 
 ];
@@ -636,6 +659,7 @@ const weeks = [
    ============================================================ */
 
 const RACE_DATE = new Date('2026-10-04T00:00:00');
+const RACE_RESULT = {time:'4h10:47', label:'chrono final'};
 const sessionRowMap = new Map(); // sess object -> {weekEl,row,detailRow}, for CTA/card deep-links
 
 function iconSvg(name, extraCls){
@@ -930,8 +954,17 @@ toggleAllBtn.addEventListener('click', () => {
 function renderHero(){
   const today = todayMidnight();
   const msPerDay = 86400000;
-  const daysLeft = Math.max(0, Math.ceil((RACE_DATE - today) / msPerDay));
-  document.getElementById('heroDays').textContent = daysLeft;
+  const daysLeft = Math.ceil((RACE_DATE - today) / msPerDay);
+
+  // Course courue : le compte à rebours n'a plus de sens, on affiche le chrono.
+  if (daysLeft < 0 && RACE_RESULT) {
+    document.getElementById('heroLabel').textContent = 'MARATHON DU 04 OCT';
+    document.getElementById('heroDays').textContent = RACE_RESULT.time;
+    document.getElementById('heroDays').classList.add('hero-count-result');
+    document.getElementById('heroUnit').textContent = RACE_RESULT.label;
+  } else {
+    document.getElementById('heroDays').textContent = Math.max(0, daysLeft);
+  }
 
   const planStart = new Date(weeks[0].start);
   const pct = Math.max(0, Math.min(100, Math.round(((today - planStart) / (RACE_DATE - planStart)) * 100)));
